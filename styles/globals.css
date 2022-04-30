@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent; /* remove Android highlights taps  */
+    }
+}
+@layer utilities {
+    /* Hide Scrollbar */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+}
+
+/*  SCROLLBAR */
+::-webkit-scrollbar {
+    @apply h-1 w-1 rounded lg:h-2 lg:w-2;
+}
+::-webkit-scrollbar-track {
+    /* @apply bg-neutral-100; */
+}
+::-webkit-scrollbar-thumb {
+    @apply rounded-lg bg-neutral-300 hover:bg-neutral-400;
+}
+/*  FORM */
+@layer base {
+    [type='text'],
+    [type='email'],
+    [type='url'],
+    [type='password'],
+    [type='number'],
+    [type='date'],
+    [type='datetime-local'],
+    [type='month'],
+    [type='search'],
+    [type='tel'],
+    [type='time'],
+    [type='week'],
+    [multiple],
+    textarea,
+    select {
+        @apply w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-400 focus:ring-primary-400;
+    }
+    [type='checkbox'],
+    [type='radio'] {
+        @apply rounded border-gray-300 text-primary-400 focus:ring-primary-400;
+    }
+}
