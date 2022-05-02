@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 
 // const testOptions = ['UI', 'Tailwind', 'React', 'Next.js', 'Node.js', 'GitHub']

@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { HiExclamationCircle } from 'react-icons/hi'
 
-import classNames from 'classNames'
+import classNames from 'classnames'
 
 const Input = (
     {
