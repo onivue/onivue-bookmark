@@ -7,7 +7,7 @@ function getFaviconUrl(url) {
 
 const BookmarkRow = () => {
     return (
-        <div className="relative rounded-lg  shadow-lg ">
+        <div className="relative rounded-xl border shadow-lg shadow-primary-50  ">
             <div className="flex items-center p-4 pr-16">
                 <a href="https://www.google.ch/" target="_blank" rel="noreferrer">
                     <img

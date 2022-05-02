@@ -45,7 +45,7 @@
     [multiple],
     textarea,
     select {
-        @apply w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-400 focus:ring-primary-400;
+        @apply w-full rounded-xl border border-gray-300 py-2.5 text-sm shadow-sm transition duration-150 ease-in focus:border-primary-400 focus:ring-primary-400;
     }
     [type='checkbox'],
     [type='radio'] {
