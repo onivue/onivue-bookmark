@@ -17,7 +17,7 @@ import {
     orderBy,
 } from 'firebase/firestore'
 
-const useKanbanStore = create((set, get) => ({
+const useBookMarkStore = create((set, get) => ({
     loading: true,
     errorMessage: null,
     setLoading: (payload) => set({ loading: payload }),
@@ -29,14 +29,40 @@ const useKanbanStore = create((set, get) => ({
             userId: '',
         },
     ) => {
-        const unsubscribe = onSnapshot(query(collection(db, `bookmarks/uid`)), (snapshot) => {
-            const documents = []
-            snapshot.forEach((doc) => documents.push({ id: doc.id, ...doc.data() }))
-            set({ bookMarks: documents })
-        })
+        const unsubscribe = onSnapshot(
+            query(collection(db, 'onivue-bookmarks/uid/bookmarks')),
+            (snapshot) => {
+                const documents = []
+                snapshot.forEach((doc) => documents.push({ id: doc.id, ...doc.data() }))
+                set({ bookMarks: documents })
+            },
+        )
 
         return () => {
             unsubscribe()
         }
     },
+    //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    setBookMark: async (
+        payload = {
+            type: '',
+            data: {},
+            // userId: '',
+            docId: '',
+        },
+    ) => {
+        const col = collection(db, `onivue-bookmarks/uid/bookmarks`)
+        if (payload.type === 'create') {
+            payload.data.dateAdded = serverTimestamp()
+            await addDoc(col, payload.data)
+        }
+        if (payload.type === 'update') {
+            await setDoc(doc(col, payload.docId), payload.data, { merge: true })
+        }
+        if (payload.type === 'delete') {
+            await deleteDoc(doc(col, payload.docId))
+        }
+    },
 }))
+
+export default useBookMarkStore

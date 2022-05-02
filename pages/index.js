@@ -6,12 +6,28 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Input from '@/components/Fields/Input'
 import { HiPlus } from 'react-icons/hi'
+import useBookMarkStore from '@/stores/useBookMarkStore'
 
 const options = ['UI', 'Tailwind', 'React', 'Next.js', 'Node.js', 'Github']
 
 export default function Home() {
     const [isAddForm, setIsAddForm] = useState(false)
     const [formValues, setFormValues] = useState({ title: '', url: '', description: '', category: [] })
+    const bookMarks = useBookMarkStore((state) => state.bookMarks)
+    const getBookMarks = useBookMarkStore((state) => state.getBookMarks)
+    const setBookMark = useBookMarkStore((state) => state.setBookMark)
+
+    useEffect(() => {
+        let unsubscribe
+        const getSubscribe = async () => {
+            unsubscribe = getBookMarks()
+        }
+        getSubscribe()
+        return () => {
+            // unsubscribe()
+        }
+    }, [getBookMarks])
+
     return (
         <div className="relative">
             {/* <Hero /> */}
@@ -56,7 +72,10 @@ export default function Home() {
                         <button
                             type="button"
                             className="h-12 rounded-xl bg-primary-300 font-bold text-primary-700"
-                            onClick={() => setIsAddForm((s) => !s)}
+                            onClick={() => {
+                                setBookMark({ type: 'create', data: formValues })
+                                setIsAddForm((s) => !s)
+                            }}
                         >
                             ADD
                         </button>
@@ -70,16 +89,15 @@ export default function Home() {
                         <HiPlus className="h-8 w-8" />
                     </button>
                 )}
-                {JSON.stringify(formValues)}
+                {/* {JSON.stringify(formValues)}
+                <hr />
+                {JSON.stringify(bookMarks)} */}
             </div>
 
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4">
-                <BookmarkRow />
-                <BookmarkRow />
-                <BookmarkRow />
-                <BookmarkRow />
-                <BookmarkRow />
-                <BookmarkRow />
+                {bookMarks.map((b) => {
+                    return <BookmarkRow key={b.id} url={b.url} title={b.title} description={b.description} />
+                })}
             </div>
         </div>
     )

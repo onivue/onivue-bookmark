@@ -2,30 +2,35 @@
 import { HiOutlinePencil } from 'react-icons/hi'
 
 function getFaviconUrl(url) {
-    return `${url.match('^(?://|[^/]+)*')[0]}/favicon.ico`
+    return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${
+        url.match('^(?://|[^/]+)*')[0]
+    }&size=128`
 }
 
-const BookmarkRow = () => {
+const BookmarkRow = ({ url, description, title }) => {
     return (
         <div className="relative rounded-xl border shadow-lg shadow-primary-50  ">
             <div className="flex items-center p-4 pr-16">
-                <a href="https://www.google.ch/" target="_blank" rel="noreferrer">
-                    <img
-                        className="h-10 w-10 rounded-lg object-cover"
-                        src={getFaviconUrl('https://www.google.ch/')}
-                        alt="favicon"
-                    />
+                <a href={url} target="_blank" rel="noreferrer">
+                    <div className="h-10 w-10">
+                        <img
+                            className="h-full w-full rounded-lg bg-primary-50 object-cover ring-2 ring-primary-200"
+                            src={getFaviconUrl(url)}
+                            alt="favicon"
+                            onError={(event) => (event.target.src = '/favicon.ico')}
+                        />
+                    </div>
                 </a>
                 <div className="ml-3 overflow-hidden">
-                    <p className="font-medium text-gray-900">Google</p>
-                    <p className="truncate text-sm text-gray-500">Description</p>
+                    <p className="font-medium text-gray-900">{title}</p>
+                    <p className="truncate text-sm text-gray-500">{description} &nbsp;</p>
                     <a
                         className="truncate pt-1 text-xs text-gray-500"
-                        href="https://www.google.ch/"
+                        href={url}
                         target="_blank"
                         rel="noreferrer"
                     >
-                        https://www.google.ch/
+                        {url}
                     </a>
                 </div>
             </div>
