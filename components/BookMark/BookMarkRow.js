@@ -1,5 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { HiOutlinePencil } from 'react-icons/hi'
+import useBookMarkStore from '@/stores/useBookMarkStore'
+import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
+import { useEffect, useState } from 'react'
+import Modal from '@/components/Modal/Modal'
 
 function getFaviconUrl(url) {
     return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${
@@ -7,7 +10,9 @@ function getFaviconUrl(url) {
     }&size=128`
 }
 
-const BookmarkRow = ({ url, description, title }) => {
+const BookmarkRow = ({ url, description, title, id }) => {
+    const [showModal, setShowModal] = useState(false)
+    const setBookMark = useBookMarkStore((state) => state.setBookMark)
     return (
         <div className="relative rounded-xl border shadow-lg shadow-primary-50  ">
             <div className="flex items-center p-4 pr-16">
@@ -23,7 +28,6 @@ const BookmarkRow = ({ url, description, title }) => {
                 </a>
                 <div className="ml-3 overflow-hidden">
                     <p className="font-medium text-gray-900">{title}</p>
-                    <p className="truncate text-sm text-gray-500">{description} &nbsp;</p>
                     <a
                         className="truncate pt-1 text-xs text-gray-500"
                         href={url}
@@ -32,13 +36,29 @@ const BookmarkRow = ({ url, description, title }) => {
                     >
                         {url}
                     </a>
+                    <p className="truncate text-sm text-gray-500">{description} &nbsp;</p>
                 </div>
             </div>
             <div className="absolute top-2 right-2 max-w-xs truncate rounded-lg bg-primary-100 px-2 text-xs text-primary-500">
                 category
             </div>
-            <div className="absolute bottom-4 right-4 cursor-pointer px-2 text-lg text-gray-500">
+
+            <Modal
+                title="Delete Bookmark"
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                onCancel={() => setShowModal(false)}
+                onSubmit={() => {
+                    setBookMark({
+                        type: 'delete',
+                        docId: id,
+                    })
+                }}
+                type="warning"
+            ></Modal>
+            <div className="absolute bottom-4 right-4 flex cursor-pointer gap-2 px-2 text-lg text-gray-500">
                 <HiOutlinePencil />
+                <HiOutlineTrash onClick={(e) => setShowModal(true)} />
             </div>
         </div>
     )

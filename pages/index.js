@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import Input from '@/components/Fields/Input'
 import { HiPlus } from 'react-icons/hi'
 import useBookMarkStore from '@/stores/useBookMarkStore'
+import Button from '@/components/Button/Button'
+import Modal from '@/components/Modal/Modal'
 
 const options = ['UI', 'Tailwind', 'React', 'Next.js', 'Node.js', 'Github']
 
@@ -69,25 +71,23 @@ export default function Home() {
                                 }}
                             />
                         </div>
-                        <button
-                            type="button"
-                            className="h-12 rounded-xl bg-primary-300 font-bold text-primary-700"
+
+                        <Button
+                            style="primary"
+                            className="h-12"
                             onClick={() => {
                                 setBookMark({ type: 'create', data: formValues })
                                 setIsAddForm((s) => !s)
                             }}
+                            type="button"
                         >
                             ADD
-                        </button>
+                        </Button>
                     </>
                 ) : (
-                    <button
-                        type="button"
-                        className="mx-auto flex h-12 w-20 items-center justify-center rounded-xl bg-primary-200 font-bold text-primary-700"
-                        onClick={() => setIsAddForm((s) => !s)}
-                    >
+                    <Button type="button" className="mx-auto" onClick={() => setIsAddForm((s) => !s)}>
                         <HiPlus className="h-8 w-8" />
-                    </button>
+                    </Button>
                 )}
                 {/* {JSON.stringify(formValues)}
                 <hr />
@@ -96,7 +96,15 @@ export default function Home() {
 
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4">
                 {bookMarks.map((b) => {
-                    return <BookmarkRow key={b.id} url={b.url} title={b.title} description={b.description} />
+                    return (
+                        <BookmarkRow
+                            key={b.id}
+                            url={b.url}
+                            title={b.title}
+                            description={b.description}
+                            id={b.id}
+                        />
+                    )
                 })}
             </div>
         </div>
