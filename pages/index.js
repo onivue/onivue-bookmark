@@ -33,45 +33,45 @@ export default function Home() {
     return (
         <div className="relative">
             {/* <Hero /> */}
-            <div className="mx-auto my-12 grid max-w-2xl gap-12">
-                {isAddForm ? (
-                    <>
-                        <div className="grid gap-2">
-                            <Input
-                                type="text"
-                                label="Title"
-                                placeholder="..."
-                                onChange={(e) => {
-                                    setFormValues({ ...formValues, title: e.target.value })
-                                }}
-                            />
-                            <Input
-                                type="text"
-                                label="URL"
-                                placeholder="https://..."
-                                onChange={(e) => {
-                                    setFormValues({ ...formValues, url: e.target.value })
-                                }}
-                            />
-                            <Input
-                                type="textarea"
-                                label="Description"
-                                placeholder="..."
-                                name="description"
-                                onChange={(e) => {
-                                    setFormValues({ ...formValues, description: e.target.value })
-                                }}
-                            />
-                            <MultiSelect
-                                options={options}
-                                label="Category"
-                                placeholder="please select a category"
-                                onChange={(val) => {
-                                    setFormValues({ ...formValues, category: val })
-                                }}
-                            />
-                        </div>
 
+            {isAddForm ? (
+                <div className="mx-auto mb-12 mt-8 grid max-w-2xl gap-12 rounded-xl border bg-slate-50 p-4">
+                    <div className="grid gap-2">
+                        <Input
+                            type="text"
+                            label="Title"
+                            placeholder="..."
+                            onChange={(e) => {
+                                setFormValues({ ...formValues, title: e.target.value })
+                            }}
+                        />
+                        <Input
+                            type="text"
+                            label="URL"
+                            placeholder="https://..."
+                            onChange={(e) => {
+                                setFormValues({ ...formValues, url: e.target.value })
+                            }}
+                        />
+                        <Input
+                            type="textarea"
+                            label="Description"
+                            placeholder="..."
+                            name="description"
+                            onChange={(e) => {
+                                setFormValues({ ...formValues, description: e.target.value })
+                            }}
+                        />
+                        <MultiSelect
+                            options={options}
+                            label="Category"
+                            placeholder="please select a category"
+                            onChange={(val) => {
+                                setFormValues({ ...formValues, category: val })
+                            }}
+                        />
+                    </div>
+                    <div className="grid gap-4">
                         <Button
                             style="primary"
                             className="h-12"
@@ -83,16 +83,28 @@ export default function Home() {
                         >
                             ADD
                         </Button>
-                    </>
-                ) : (
+                        <Button
+                            style="secondary"
+                            className="h-12"
+                            onClick={() => {
+                                setIsAddForm((s) => !s)
+                            }}
+                            type="button"
+                        >
+                            Cancel
+                        </Button>
+                    </div>
+                </div>
+            ) : (
+                <div className="mb-12 mt-8 flex">
                     <Button type="button" className="mx-auto" onClick={() => setIsAddForm((s) => !s)}>
                         <HiPlus className="h-8 w-8" />
                     </Button>
-                )}
-                {/* {JSON.stringify(formValues)}
+                </div>
+            )}
+            {/* {JSON.stringify(formValues)}
                 <hr />
                 {JSON.stringify(bookMarks)} */}
-            </div>
 
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4">
                 {bookMarks.map((b) => {
