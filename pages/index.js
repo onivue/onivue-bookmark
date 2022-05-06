@@ -80,7 +80,7 @@ export default function Home() {
                             label="Category"
                             placeholder="please select a category"
                             onChange={(val) => {
-                                setFormValues({ ...formValues, category: val })
+                                setFormValues({ ...formValues, category: val.map((v) => v.id) })
                             }}
                         />
                     </div>
@@ -110,15 +110,22 @@ export default function Home() {
                 </div>
             ) : (
                 <div className="mb-12 mt-8 flex">
-                    <Button type="button" className="mx-auto" onClick={() => setIsAddForm((s) => !s)}>
+                    <Button
+                        style="secondary"
+                        type="button"
+                        className="mx-auto"
+                        onClick={() => setIsAddForm((s) => !s)}
+                    >
                         <HiPlus className="h-8 w-8" />
                     </Button>
                 </div>
             )}
-            {/* {JSON.stringify(formValues)}
+
+            {/* 
                 <hr />
                 {JSON.stringify(bookMarks)} */}
 
+            {/* {JSON.stringify(formValues)} */}
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4">
                 {bookMarks.map((b) => {
                     return (

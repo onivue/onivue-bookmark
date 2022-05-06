@@ -33,7 +33,7 @@ const CategoryManager = ({}) => {
                 </div>
             </div>
             <Modal
-                title="Delete Bookmark"
+                title="Add Category"
                 show={showModal}
                 onClose={() => setShowModal(false)}
                 onCancel={() => setShowModal(false)}

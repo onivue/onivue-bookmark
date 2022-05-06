@@ -13,13 +13,14 @@ function getFaviconUrl(url) {
 const BookmarkRow = ({ url, description, title, id, category }) => {
     const [showModal, setShowModal] = useState(false)
     const setBookMark = useBookMarkStore((state) => state.setBookMark)
+    const categories = useBookMarkStore((state) => state.categories)
     return (
         <div className="relative rounded-xl border shadow-lg shadow-primary-50  ">
-            <div className="flex items-center p-4 pr-16">
+            <div className="flex items-center p-4 pr-20">
                 <a href={url} target="_blank" rel="noreferrer">
                     <div className="h-10 w-10">
                         <img
-                            className="h-full w-full rounded-lg bg-primary-50 object-cover ring-2 ring-primary-200"
+                            className="h-full w-full rounded-lg bg-primary-50 object-cover"
                             src={getFaviconUrl(url)}
                             alt="favicon"
                             onError={(event) => (event.target.src = '/favicon.ico')}
@@ -34,19 +35,24 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
                         target="_blank"
                         rel="noreferrer"
                     >
-                        {url}
+                        {url ? url : <>&nbsp;</>}
                     </a>
-                    <p className="truncate text-sm text-gray-500">{description} &nbsp;</p>
+                    <p className="truncate text-sm text-gray-500">
+                        {description ? description : <>&nbsp;</>}
+                    </p>
                 </div>
             </div>
             <div className="absolute top-2 right-2 flex flex-wrap gap-2  ">
                 {category.map((c) => {
+                    const catObj = categories.filter((x) => x.id === c)[0]
+                    if (!catObj) return
                     return (
                         <div
                             key={c}
-                            className="max-w-xs truncate rounded-lg bg-primary-100 px-2 text-xs text-primary-500"
+                            className="flex max-w-xs items-center gap-1 truncate rounded-lg text-xs text-primary-500"
                         >
-                            {c}
+                            <div className="h-1 w-1 rounded-full" style={{ background: catObj?.color }}></div>
+                            {catObj?.title}
                         </div>
                     )
                 })}
