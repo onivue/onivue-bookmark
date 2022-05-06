@@ -68,7 +68,7 @@ const Input = (
 
     return (
         <div className="grid gap-1">
-            <div className="relative z-0">
+            <div className="relative z-0 flex items-center">
                 {type === 'textarea' ? (
                     <textarea
                         {...rest}
@@ -132,6 +132,7 @@ const Input = (
                         {iconLeft}
                     </div>
                 )}
+
                 {(resolveObjectPath(errors, id) || iconRight) && (
                     <div className="absolute inset-y-0 right-0 flex w-12 items-center justify-center ">
                         {resolveObjectPath(errors, id) && (

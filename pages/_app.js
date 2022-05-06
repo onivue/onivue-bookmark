@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
 import SideBar from '@/components/Layout/SideBar/SideBar'
-import TopBar from '@/components/Layout/Header/Header'
+import Header from '@/components/Layout/Header/Header'
 import RightSection from '@/components/Layout/RightSection/RightSection'
 import Footer from '@/components/Layout/Footer/Footer'
 
@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }) {
             </Head>
 
             <SideBar>
-                <TopBar />
+                <Header />
                 <div className="flex flex-1">
                     <section className="mb-4 mt-4 flex flex-1 grid-cols-1 flex-col justify-between rounded-lg px-4 pb-4">
                         <Component {...pageProps} />

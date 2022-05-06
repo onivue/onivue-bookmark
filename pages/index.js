@@ -18,6 +18,8 @@ export default function Home() {
     const bookMarks = useBookMarkStore((state) => state.bookMarks)
     const getBookMarks = useBookMarkStore((state) => state.getBookMarks)
     const setBookMark = useBookMarkStore((state) => state.setBookMark)
+    const getCategories = useBookMarkStore((state) => state.getCategories)
+    const categories = useBookMarkStore((state) => state.categories)
 
     useEffect(() => {
         let unsubscribe
@@ -26,9 +28,20 @@ export default function Home() {
         }
         getSubscribe()
         return () => {
-            // unsubscribe()
+            unsubscribe()
         }
     }, [getBookMarks])
+
+    useEffect(() => {
+        let unsubscribe
+        const getSubscribe = async () => {
+            unsubscribe = getCategories()
+        }
+        getSubscribe()
+        return () => {
+            unsubscribe()
+        }
+    }, [getCategories])
 
     return (
         <div className="relative">
@@ -63,7 +76,7 @@ export default function Home() {
                             }}
                         />
                         <MultiSelect
-                            options={options}
+                            options={categories}
                             label="Category"
                             placeholder="please select a category"
                             onChange={(val) => {

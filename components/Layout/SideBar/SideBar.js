@@ -3,6 +3,7 @@ import router from 'next/router'
 import Link from 'next/link'
 import LogoIcon from '@/components/LogoIcon/LogoIcon'
 import { HiMenuAlt2 } from 'react-icons/hi'
+import CategoryManager from '@/components/Category/CategoryManager'
 
 export default function SideBar({ children }) {
     const [sideBarIsOpen, toggleSideBar] = useState(false)
@@ -54,7 +55,7 @@ function SideBarNavigationWrapper(props) {
             }`}
         >
             <div
-                className="no-scrollbar flex h-full flex-1 flex-col overflow-y-hidden rounded-xl bg-white p-4 shadow-2xl hover:overflow-y-auto focus:outline-none"
+                className="no-scrollbar flex h-full flex-1 flex-col overflow-y-hidden rounded-xl bg-white p-4 shadow-xl hover:overflow-y-auto focus:outline-none"
                 ref={props.refProp}
             >
                 {props.children}
@@ -72,22 +73,23 @@ function SideBarLogo() {
     )
 }
 export function SideBarNavigation() {
-    return (
-        <nav className="flex flex-col gap-8">
-            <div>
-                <h2 className="mb-4 font-bold">Navigation</h2>
-                <div className="flex flex-col gap-2 text-zinc-700">
-                    <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
-                        Apps
-                    </div>
-                    <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
-                        Information
-                    </div>
-                    <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
-                        About
-                    </div>
-                </div>
-            </div>
-        </nav>
-    )
+    return <CategoryManager />
+    // return (
+    //     <nav className="flex flex-col gap-8">
+    //         <div>
+    //             <h2 className="mb-4 font-bold">Navigation</h2>
+    //             <div className="flex flex-col gap-2 text-zinc-700">
+    //                 <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
+    //                     Apps
+    //                 </div>
+    //                 <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
+    //                     Information
+    //                 </div>
+    //                 <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
+    //                     About
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </nav>
+    // )
 }

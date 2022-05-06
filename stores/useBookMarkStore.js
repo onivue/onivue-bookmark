@@ -63,6 +63,49 @@ const useBookMarkStore = create((set, get) => ({
             await deleteDoc(doc(col, payload.docId))
         }
     },
+    //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    categories: [],
+    //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    getCategories: (
+        payload = {
+            userId: '',
+        },
+    ) => {
+        const unsubscribe = onSnapshot(
+            query(collection(db, 'onivue-bookmarks/uid/categories')),
+            (snapshot) => {
+                const documents = []
+                snapshot.forEach((doc) => documents.push({ id: doc.id, ...doc.data() }))
+                const sortedDocuments = documents.sort((a, b) => (a.title > b.title ? 1 : -1))
+                set({ categories: sortedDocuments })
+            },
+        )
+
+        return () => {
+            unsubscribe()
+        }
+    },
+    //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    setCategory: async (
+        payload = {
+            type: '',
+            data: {},
+            // userId: '',
+            docId: '',
+        },
+    ) => {
+        const col = collection(db, `onivue-bookmarks/uid/categories`)
+        if (payload.type === 'create') {
+            payload.data.dateAdded = serverTimestamp()
+            await addDoc(col, payload.data)
+        }
+        if (payload.type === 'update') {
+            await setDoc(doc(col, payload.docId), payload.data, { merge: true })
+        }
+        if (payload.type === 'delete') {
+            await deleteDoc(doc(col, payload.docId))
+        }
+    },
 }))
 
 export default useBookMarkStore

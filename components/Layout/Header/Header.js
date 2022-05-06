@@ -5,12 +5,12 @@ import { HiOutlineCog, HiOutlineUser } from 'react-icons/hi'
 import { BsPinAngle } from 'react-icons/bs'
 import LogoIcon from '@/components/LogoIcon/LogoIcon'
 
-function TopBar() {
+function Header() {
     return (
         <>
-            <div className="fixed inset-x-0 z-10 h-20 w-full bg-gradient-to-b from-gray-50"></div>
+            {/* <div className="fixed inset-x-0 z-10 h-20 w-full bg-gradient-to-b from-gray-50"></div> */}
 
-            <div className="sticky  top-4 z-10 mx-4 mt-4 flex items-center rounded-lg bg-white p-3 px-3 shadow-lg lg:h-16 ">
+            <div className="sticky top-0 z-10 flex items-center rounded-lg py-5 px-3 backdrop-blur lg:h-16">
                 <div className="relative flex w-full items-center justify-between lg:flex-row-reverse">
                     <div className="mx-2 grid h-full place-items-center rounded-lg lg:hidden">
                         <Link href="/">
@@ -37,4 +37,4 @@ function TopBar() {
         </>
     )
 }
-export default TopBar
+export default Header
