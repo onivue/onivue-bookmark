@@ -4,29 +4,81 @@ import Button from '../Button/Button'
 import { HiPlus } from 'react-icons/hi'
 import Modal from '../Modal/Modal'
 import Input from '../Fields/Input'
+import { HiOutlinePencil, HiOutlineTrash, HiX } from 'react-icons/hi'
 
 const CategoryManager = ({}) => {
     const categories = useBookMarkStore((state) => state.categories)
-
     const setCategory = useBookMarkStore((state) => state.setCategory)
     const [showModal, setShowModal] = useState(false)
+    const [isEdit, setIsEdit] = useState(false)
     const [formValues, setFormValues] = useState({ title: '', color: 'black' })
 
     return (
         <nav className="flex flex-col gap-8">
             <div>
-                <h2 className="mb-4 font-bold">Category Manager</h2>
+                <div className="mb-4 flex items-center justify-between gap-4">
+                    <h2 className="font-bold">Category Manager</h2>
+                    {isEdit ? (
+                        <HiOutlinePencil
+                            className="h-5 w-5 cursor-pointer text-slate-400"
+                            onClick={() => setIsEdit(!isEdit)}
+                        />
+                    ) : (
+                        <HiX
+                            className="h-5 w-5 cursor-pointer text-slate-400"
+                            onClick={() => setIsEdit(!isEdit)}
+                        />
+                    )}
+                </div>
                 <div className="flex flex-col gap-2 text-zinc-700">
                     {categories.map((c) => {
                         return (
-                            <div className="flex items-center gap-2" key={c.id}>
-                                <div
-                                    className="h-4 w-4 rounded-full border-black"
-                                    style={{ background: c.color }}
-                                ></div>
-                                <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
-                                    {c.title}
-                                </div>
+                            <div key={c.id}>
+                                {!isEdit ? (
+                                    <div className="flex items-center gap-2">
+                                        <div
+                                            className="h-4 w-4 rounded-full border-black"
+                                            style={{ background: c.color }}
+                                        ></div>
+                                        <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
+                                            {c.title}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center justify-center">
+                                        <Input
+                                            type="color"
+                                            onChange={(e) => {
+                                                setCategory({
+                                                    type: 'update',
+                                                    docId: c.id,
+                                                    data: { ...c.data, color: e.target.value },
+                                                })
+                                            }}
+                                            value={c.color}
+                                        />
+                                        <Input
+                                            type="text"
+                                            onChange={(e) => {
+                                                setCategory({
+                                                    type: 'update',
+                                                    docId: c.id,
+                                                    data: { ...c.data, title: e.target.value },
+                                                })
+                                            }}
+                                            value={c.title}
+                                        />
+                                        <HiOutlineTrash
+                                            className="h-5 w-5 cursor-pointer text-slate-400"
+                                            onClick={() =>
+                                                setCategory({
+                                                    type: 'delete',
+                                                    docId: c.id,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                )}
                             </div>
                         )
                     })}
