@@ -10,7 +10,7 @@ function getFaviconUrl(url) {
     }&size=128`
 }
 
-const BookmarkRow = ({ url, description, title, id }) => {
+const BookmarkRow = ({ url, description, title, id, category }) => {
     const [showModal, setShowModal] = useState(false)
     const setBookMark = useBookMarkStore((state) => state.setBookMark)
     return (
@@ -39,8 +39,17 @@ const BookmarkRow = ({ url, description, title, id }) => {
                     <p className="truncate text-sm text-gray-500">{description} &nbsp;</p>
                 </div>
             </div>
-            <div className="absolute top-2 right-2 max-w-xs truncate rounded-lg bg-primary-100 px-2 text-xs text-primary-500">
-                category
+            <div className="absolute top-2 right-2 flex flex-wrap gap-2  ">
+                {category.map((c) => {
+                    return (
+                        <div
+                            key={c}
+                            className="max-w-xs truncate rounded-lg bg-primary-100 px-2 text-xs text-primary-500"
+                        >
+                            {c}
+                        </div>
+                    )
+                })}
             </div>
 
             <Modal

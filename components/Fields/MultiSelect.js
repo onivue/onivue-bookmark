@@ -19,18 +19,19 @@ export default function MultiSelect({ options, selectedInitialValues = [], label
                 multiple
             >
                 {({ open }) => (
-                    <>
-                        <Listbox.Label className="text-sm font-medium text-gray-700">{label}</Listbox.Label>
+                    <div className="relative mt-4">
                         <div className="relative">
-                            <span className="">
-                                <Listbox.Button
-                                    className="focus:shadow-outline-blue t ext-left relative flex w-full cursor-default 
-                                flex-wrap gap-x-1 gap-y-2 rounded-xl border border-gray-300 bg-white py-2 pl-3
-                                pr-10 transition duration-150 ease-in-out focus:border-primary-300 
-                                focus:outline-none"
+                            <div className="group">
+                                <Listbox.Label
+                                    className={`absolute top-3 origin-[0] -translate-y-6  transform text-sm text-gray-500 duration-300  ${
+                                        selectedValues.length === 0 ? 'scale-100' : 'scale-75'
+                                    }`}
                                 >
+                                    {label}
+                                </Listbox.Label>
+                                <Listbox.Button className="w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent py-2.5 px-0 text-left text-sm text-gray-900 focus:border-primary-300 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-primary-500">
                                     {selectedValues.length === 0 ? (
-                                        <div className="text-gray-400">{placeholder}</div>
+                                        <div className="text-gray-400">&nbsp;</div>
                                     ) : (
                                         selectedValues.map((val, index) => (
                                             <span
@@ -58,8 +59,7 @@ export default function MultiSelect({ options, selectedInitialValues = [], label
                                         </svg>
                                     </span>
                                 </Listbox.Button>
-                            </span>
-
+                            </div>
                             <Transition
                                 show={open}
                                 leave="transition ease-in duration-100"
@@ -113,7 +113,7 @@ export default function MultiSelect({ options, selectedInitialValues = [], label
                                 </Listbox.Options>
                             </Transition>
                         </div>
-                    </>
+                    </div>
                 )}
             </Listbox>
         </>

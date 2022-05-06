@@ -20,12 +20,13 @@ const Input = (
     },
     ref,
 ) => {
-    const styleLabel = 'text-sm font-medium text-gray-700'
+    const styleLabel =
+        'absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-primary-600 dark:text-gray-400 peer-focus:dark:text-primary-500'
     const styleError = 'focus:ring-red-500 border-red-500 focus:border-red-500'
     const styleDisabled = 'opacity-50 focus:ring-gray-300 focus:border-gray-200 cursor-not-allowed'
     const styles = {
         text: {
-            base: '',
+            base: 'peer',
             active: '',
             disabled: styleDisabled,
             error: styleError,
@@ -49,7 +50,7 @@ const Input = (
             error: styleError,
         },
         textarea: {
-            base: 'h-full',
+            base: 'h-full peer',
             active: '',
             disabled: 'opacity-50 focus:ring-gray-300 focus:border-gray-200 cursor-not-allowed',
             error: 'border-red-500 focus:ring-red-500 focus:border-red-500',
@@ -67,15 +68,7 @@ const Input = (
 
     return (
         <div className="grid gap-1">
-            {(type === 'text' || type === 'file' || type === 'textarea') && (
-                <label htmlFor={id} className={styleLabel}>
-                    {label}
-                    {dot && <span className="pl-0.5 text-red-500">*</span>}
-                    {dirtyFields[id] && <span className="pl-0.5 text-blue-500">*</span>}
-                </label>
-            )}
-
-            <div className="relative">
+            <div className="relative z-0">
                 {type === 'textarea' ? (
                     <textarea
                         {...rest}
@@ -88,7 +81,7 @@ const Input = (
                             styles.textarea.base,
                             readOnly ? styles.textarea.disabled : errors[id] && styles.textarea.error,
                         )}
-                        placeholder={placeholder}
+                        placeholder={' '}
                         aria-describedby={id}
                         ref={ref}
                     />
@@ -101,30 +94,38 @@ const Input = (
                         aria-required={dot}
                         aria-invalid={!!resolveObjectPath(errors, id)}
                         className={classNames(
-                            styles[type].base,
+                            styles[type]?.base,
                             readOnly
-                                ? styles[type].disabled
+                                ? styles[type]?.disabled
                                 : resolveObjectPath(errors, id)
-                                ? styles[type].error
-                                : styles[type].active,
+                                ? styles[type]?.error
+                                : styles[type]?.active,
                             iconLeft && 'pl-12',
                             iconRight && 'pr-12',
                         )}
-                        placeholder={placeholder}
+                        placeholder={' '}
                         aria-describedby={id}
                         ref={ref}
                         readOnly={readOnly}
                         disabled={readOnly}
                     />
                 )}
+                {/* LABEL */}
 
-                {type !== 'text' && type !== 'file' && type !== 'textarea' && (
-                    <label htmlFor={id} className={styleLabel}>
-                        {label}
-                        {dot && <span className="pl-0.5 text-red-500">*</span>}
-                        {dirtyFields[id] && <span className="pl-0.5 text-blue-500">has changes</span>}
-                    </label>
-                )}
+                <label
+                    htmlFor={id}
+                    className={
+                        type === 'text' || type === 'file' || type === 'textarea'
+                            ? styleLabel
+                            : 'ml-3 text-sm'
+                    }
+                >
+                    {label}
+                    {dot && <span className="pl-0.5 text-red-500">*</span>}
+                    {dirtyFields[id] && <span className="pl-0.5 text-primary-500">*</span>}
+                </label>
+
+                {/* LABEL END */}
                 {/* ICONS */}
                 {iconLeft && (
                     <div className="absolute inset-y-0 left-0 flex w-12 items-center justify-center ">

@@ -36,7 +36,7 @@ export default function Home() {
 
             {isAddForm ? (
                 <div className="mx-auto mb-12 mt-8 grid max-w-2xl gap-12 rounded-xl border bg-slate-50 p-4">
-                    <div className="grid gap-2">
+                    <div className="grid gap-4">
                         <Input
                             type="text"
                             label="Title"
@@ -114,6 +114,7 @@ export default function Home() {
                             url={b.url}
                             title={b.title}
                             description={b.description}
+                            category={b.category}
                             id={b.id}
                         />
                     )
