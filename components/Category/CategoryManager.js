@@ -19,12 +19,12 @@ const CategoryManager = ({}) => {
                 <div className="mb-4 flex items-center justify-between gap-4">
                     <h2 className="font-bold">Category Manager</h2>
                     {isEdit ? (
-                        <HiOutlinePencil
+                        <HiX
                             className="h-5 w-5 cursor-pointer text-slate-400"
                             onClick={() => setIsEdit(!isEdit)}
                         />
                     ) : (
-                        <HiX
+                        <HiOutlinePencil
                             className="h-5 w-5 cursor-pointer text-slate-400"
                             onClick={() => setIsEdit(!isEdit)}
                         />
