@@ -30,7 +30,16 @@ const useBookMarkStore = create((set, get) => ({
         },
     ) => {
         const unsubscribe = onSnapshot(
-            query(collection(db, 'onivue-bookmarks/uid/bookmarks')),
+            // query(collection(db, 'onivue-bookmarks/uid/bookmarks'))
+            query(
+                collection(db, `onivue-bookmarks/uid/bookmarks`),
+                // ...(payload.filterCategory && where('category', 'array-contains', '7qUbAfNBlYRhRqUmnfzy')),
+                // where('category', 'array-contains', '7qUbAfNBlYRhRqUmnfzy'),
+
+                // where('owner', '==', payload.userId),
+
+                // orderBy('title', 'asc'),
+            ),
             (snapshot) => {
                 const documents = []
                 snapshot.forEach((doc) => documents.push({ id: doc.id, ...doc.data() }))

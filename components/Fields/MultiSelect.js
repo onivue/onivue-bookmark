@@ -68,7 +68,7 @@ export default function MultiSelect({ options, selectedInitialValues = [], label
                             >
                                 <Listbox.Options
                                     static
-                                    className="shadow-xs max-h-60 overflow-auto rounded-xl py-1 text-base leading-6 focus:outline-none"
+                                    className="shadow-xs max-h-52 overflow-auto rounded-xl py-1 text-base leading-6 focus:outline-none"
                                 >
                                     {options.map((opt) => (
                                         <Listbox.Option key={opt.id} value={opt}>

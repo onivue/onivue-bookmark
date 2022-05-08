@@ -8,9 +8,9 @@ import LogoIcon from '@/components/LogoIcon/LogoIcon'
 function Header() {
     return (
         <>
-            {/* <div className="fixed inset-x-0 z-10 h-20 w-full bg-gradient-to-b from-gray-50"></div> */}
+            <div className="fixed inset-x-0 z-10 h-16 w-full backdrop-blur"></div>
 
-            <div className="sticky top-0 z-10 flex items-center rounded-lg py-5 px-3 backdrop-blur lg:h-16">
+            <div className="sticky top-0 z-10 flex items-center py-5 px-3 lg:h-16">
                 <div className="relative flex w-full items-center justify-between lg:flex-row-reverse">
                     <div className="mx-2 grid h-full place-items-center rounded-lg lg:hidden">
                         <Link href="/">

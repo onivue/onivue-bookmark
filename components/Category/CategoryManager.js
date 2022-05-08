@@ -9,7 +9,9 @@ import { HiOutlinePencil, HiOutlineTrash, HiX } from 'react-icons/hi'
 const CategoryManager = ({}) => {
     const categories = useBookMarkStore((state) => state.categories)
     const setCategory = useBookMarkStore((state) => state.setCategory)
-    const [showModal, setShowModal] = useState(false)
+    const [showModalAdd, setShowModalAdd] = useState(false)
+    const [showModalDelete, setShowModalDelete] = useState(false)
+    const [categoryToDelete, setCategoryToDelete] = useState(null)
     const [isEdit, setIsEdit] = useState(false)
     const [formValues, setFormValues] = useState({ title: '', color: 'black' })
 
@@ -40,7 +42,7 @@ const CategoryManager = ({}) => {
                                             className="h-4 w-4 rounded-full border-black"
                                             style={{ background: c.color }}
                                         ></div>
-                                        <div className="cursor-pointer rounded-lg bg-primary-100 py-1 px-3 text-primary-800">
+                                        <div className="cursor-pointer rounded-lg py-1 px-3 text-primary-800 hover:bg-primary-100">
                                             {c.title}
                                         </div>
                                     </div>
@@ -70,12 +72,10 @@ const CategoryManager = ({}) => {
                                         />
                                         <HiOutlineTrash
                                             className="h-5 w-5 cursor-pointer text-slate-400"
-                                            onClick={() =>
-                                                setCategory({
-                                                    type: 'delete',
-                                                    docId: c.id,
-                                                })
-                                            }
+                                            onClick={() => {
+                                                setCategoryToDelete(c)
+                                                setShowModalDelete(true)
+                                            }}
                                         />
                                     </div>
                                 )}
@@ -85,16 +85,30 @@ const CategoryManager = ({}) => {
                 </div>
             </div>
             <Modal
+                title="Delete Category"
+                show={showModalDelete}
+                onClose={() => setShowModalDelete(false)}
+                onCancel={() => setShowModalDelete(false)}
+                onSubmit={() => {
+                    setCategory({
+                        type: 'delete',
+                        docId: categoryToDelete.id,
+                    })
+                    setShowModalDelete(false)
+                }}
+                type="warning"
+            ></Modal>
+            <Modal
                 title="Add Category"
-                show={showModal}
-                onClose={() => setShowModal(false)}
-                onCancel={() => setShowModal(false)}
+                show={showModalAdd}
+                onClose={() => setShowModalAdd(false)}
+                onCancel={() => setShowModalAdd(false)}
                 onSubmit={() => {
                     setCategory({
                         type: 'create',
                         data: formValues,
                     })
-                    setShowModal(false)
+                    setShowModalAdd(false)
                     setFormValues({ title: '', color: 'black' })
                 }}
                 type="edit"
@@ -118,10 +132,11 @@ const CategoryManager = ({}) => {
                     />
                 </div>
             </Modal>
+
             <div
                 className="flex cursor-pointer justify-center"
                 onClick={() => {
-                    setShowModal(true)
+                    setShowModalAdd(true)
                 }}
             >
                 <HiPlus className="h-6 w-6 text-slate-400" />

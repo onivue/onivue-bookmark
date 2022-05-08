@@ -19,7 +19,7 @@ export default function Modal({ show, onClose, onCancel, onSubmit, title, childr
                     onClose={onClose}
                     initialFocus={closeButtonRef}
                 >
-                    <div className="min-h-screen items-end justify-center text-center backdrop-blur ">
+                    <div className="min-h-screen items-end justify-center text-center backdrop-blur">
                         <Transition.Child
                             enter="ease-out duration-300"
                             enterFrom="opacity-0"
@@ -46,7 +46,7 @@ export default function Modal({ show, onClose, onCancel, onSubmit, title, childr
                             leaveTo="opacity-0 translate-y-6"
                         >
                             {/* //! -----------------------CONTENT--------------------------------- */}
-                            <div className="inline-block w-11/12 transform overflow-hidden rounded-lg bg-white text-left align-middle shadow-xl transition-all  lg:w-full lg:max-w-2xl">
+                            <div className="inline-block w-11/12 transform overflow-auto rounded-lg bg-white text-left align-middle shadow-xl  transition-all lg:w-full lg:max-w-2xl">
                                 {/* //! -----------------------CLOSE X BUTTON--------------------------------- */}
                                 <button
                                     className="absolute right-0 flex cursor-pointer items-center justify-center p-2 focus:outline-none"
@@ -84,7 +84,7 @@ export default function Modal({ show, onClose, onCancel, onSubmit, title, childr
                                         </Dialog.Title>
                                     </div>
                                     {/* //! -----------------------CONTENT--------------------------------- */}
-                                    <div className="mt-3 ">{children}</div>
+                                    <div className="mt-3">{children}</div>
                                 </div>
                                 {/* //! -----------------------FOOTER--------------------------------- */}
                                 {(onSubmit || onCancel) && (
