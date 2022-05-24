@@ -21,9 +21,9 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
     const categories = useBookMarkStore((state) => state.categories)
     return (
         <a href={url} target="_blank" rel="noreferrer">
-            <div className="relative rounded-xl border border-slate-100 shadow-lg shadow-primary-50 hover:shadow-xl hover:shadow-primary-100  ">
+            <div className="relative rounded-xl border border-slate-200 bg-white transition duration-300 hover:shadow-lg hover:shadow-primary-100">
                 <div className="flex items-center p-4 pr-20">
-                    <div className="h-10 w-10">
+                    <div className="h-10 w-10 flex-shrink-0">
                         <img
                             className="h-full w-full rounded-lg bg-primary-50 object-cover"
                             src={getFaviconUrl(url)}
@@ -54,10 +54,10 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
                         return (
                             <div
                                 key={c}
-                                className="flex max-w-xs items-center gap-1 truncate rounded-lg text-xs text-primary-500"
+                                className="flex max-w-xs items-center gap-1 truncate rounded-lg text-xs text-slate-800"
                             >
                                 <div
-                                    className="h-1 w-1 rounded-full"
+                                    className="h-2 w-2 rounded-full border border-slate-500"
                                     style={{ background: catObj?.color }}
                                 ></div>
                                 {catObj?.title}
@@ -89,19 +89,21 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
                 />
                 <div className="absolute bottom-4 right-4 flex cursor-pointer gap-2 px-2 text-lg text-gray-500">
                     <HiOutlinePencil
+                        className="transition duration-100 hover:scale-125 hover:text-primary-400"
                         onClick={(e) => {
                             e.preventDefault()
                             setShowModalEdit(true)
                         }}
                     />
                     <HiOutlineTrash
+                        className="transition duration-100 hover:scale-125 hover:text-red-400"
                         onClick={(e) => {
                             e.preventDefault()
                             setShowModalDelete(true)
                         }}
                     />
                 </div>
-            </div>{' '}
+            </div>
         </a>
     )
 }

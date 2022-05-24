@@ -1,9 +1,8 @@
 import useBookMarkStore from '@/stores/useBookMarkStore'
-import { useEffect, useState } from 'react'
-import Button from '../Button/Button'
+import { useState } from 'react'
 import { HiPlus } from 'react-icons/hi'
-import Modal from '../Modal/Modal'
-import Input from '../Fields/Input'
+import Modal from '@/components/Modal/Modal'
+import Input from '@/components/Fields/Input'
 import { HiOutlinePencil, HiOutlineTrash, HiX } from 'react-icons/hi'
 
 const CategoryManager = ({}) => {
@@ -39,10 +38,10 @@ const CategoryManager = ({}) => {
                                 {!isEdit ? (
                                     <div className="flex items-center gap-2">
                                         <div
-                                            className="h-4 w-4 rounded-full border-black"
+                                            className="h-4 w-4 shrink-0 rounded-full border-black"
                                             style={{ background: c.color }}
                                         ></div>
-                                        <div className="cursor-pointer rounded-lg py-1 px-3 text-primary-800 hover:bg-primary-100">
+                                        <div className="w-full cursor-pointer rounded-lg py-1 px-3 text-primary-800 hover:bg-primary-50">
                                             {c.title}
                                         </div>
                                     </div>
