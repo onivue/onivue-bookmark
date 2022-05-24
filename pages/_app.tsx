@@ -1,9 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import '@/styles/globals.css'
-import Link from 'next/link'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
 import SideBar from '@/components/Layout/SideBar/SideBar'
 import Header from '@/components/Layout/Header/Header'
 import RightSection from '@/components/Layout/RightSection/RightSection'
