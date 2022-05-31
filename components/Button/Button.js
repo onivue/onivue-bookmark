@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React from 'react'
+import { forwardRef } from 'react'
 
 const styleBase = classNames(
     'font-bold align-bottom cursor-pointer transition duration-150 focus:outline-none items-center justify-center',
