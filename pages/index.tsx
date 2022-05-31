@@ -15,14 +15,14 @@ const options = ['UI', 'Tailwind', 'React', 'Next.js', 'Node.js', 'Github']
 export default function Home() {
     const [isAddForm, setIsAddForm] = useState(false)
     const [formValues, setFormValues] = useState({ title: '', url: '', description: '', category: [] })
-    const bookMarks = useBookMarkStore((state) => state.bookMarks)
-    const getBookMarks = useBookMarkStore((state) => state.getBookMarks)
-    const setBookMark = useBookMarkStore((state) => state.setBookMark)
-    const getCategories = useBookMarkStore((state) => state.getCategories)
-    const categories = useBookMarkStore((state) => state.categories)
+    const bookMarks = useBookMarkStore((state: any) => state.bookMarks)
+    const getBookMarks = useBookMarkStore((state: any) => state.getBookMarks)
+    const setBookMark = useBookMarkStore((state: any) => state.setBookMark)
+    const getCategories = useBookMarkStore((state: any) => state.getCategories)
+    const categories = useBookMarkStore((state: any) => state.categories)
 
     useEffect(() => {
-        let unsubscribe
+        let unsubscribe: any
         const getSubscribe = async () => {
             unsubscribe = getBookMarks()
         }
@@ -33,7 +33,7 @@ export default function Home() {
     }, [getBookMarks])
 
     useEffect(() => {
-        let unsubscribe
+        let unsubscribe: any
         const getSubscribe = async () => {
             unsubscribe = getCategories()
         }
@@ -54,7 +54,7 @@ export default function Home() {
                             type="text"
                             label="Title"
                             placeholder="..."
-                            onChange={(e) => {
+                            onChange={(e:any) => {
                                 setFormValues({ ...formValues, title: e.target.value })
                             }}
                         />
@@ -62,7 +62,7 @@ export default function Home() {
                             type="text"
                             label="URL"
                             placeholder="https://..."
-                            onChange={(e) => {
+                            onChange={(e:any) => {
                                 setFormValues({ ...formValues, url: e.target.value })
                             }}
                         />
@@ -71,7 +71,7 @@ export default function Home() {
                             label="Description"
                             placeholder="..."
                             name="description"
-                            onChange={(e) => {
+                            onChange={(e:any) => {
                                 setFormValues({ ...formValues, description: e.target.value })
                             }}
                         />
@@ -79,7 +79,7 @@ export default function Home() {
                             options={categories}
                             label="Category"
                             placeholder="please select a category"
-                            onChange={(val) => {
+                            onChange={(val:any) => {
                                 setFormValues({ ...formValues, category: val.map((v) => v.id) })
                             }}
                         />
@@ -121,13 +121,9 @@ export default function Home() {
                 </div>
             )}
 
-            {/* 
-                <hr />
-                {JSON.stringify(bookMarks)} */}
-
-            {/* {JSON.stringify(formValues)} */}
+           
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4">
-                {bookMarks.map((b) => {
+                {bookMarks.map((b:any) => {
                     return (
                         <BookmarkRow
                             key={b.id}
