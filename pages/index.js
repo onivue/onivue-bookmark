@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Input from '@/components/Fields/Input'
-import { HiPlus } from 'react-icons/hi'
+import { HiPlus, HiFilter } from 'react-icons/hi'
 import useBookMarkStore from '@/stores/useBookMarkStore'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Modal/Modal'
@@ -20,6 +20,8 @@ export default function Home() {
     const setBookMark = useBookMarkStore((state) => state.setBookMark)
     const getCategories = useBookMarkStore((state) => state.getCategories)
     const categories = useBookMarkStore((state) => state.categories)
+    const filterCategory = useBookMarkStore((state) => state.filterCategory)
+    const setFilterCategory = useBookMarkStore((state) => state.setFilterCategory)
 
     useEffect(() => {
         let unsubscribe
@@ -30,7 +32,7 @@ export default function Home() {
         return () => {
             unsubscribe()
         }
-    }, [getBookMarks])
+    }, [getBookMarks, filterCategory])
 
     useEffect(() => {
         let unsubscribe
@@ -46,7 +48,6 @@ export default function Home() {
     return (
         <div className="relative">
             {/* <Hero /> */}
-
             {isAddForm ? (
                 <div className="mx-auto mb-12 mt-8 grid max-w-2xl gap-12 rounded-xl border bg-slate-50 p-4">
                     <div className="grid gap-4">
@@ -120,13 +121,37 @@ export default function Home() {
                     </Button>
                 </div>
             )}
-
             {/* 
                 <hr />
                 {JSON.stringify(bookMarks)} */}
-
             {/* {JSON.stringify(formValues)} */}
+
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4">
+                <div>
+                    <div className="flex flex-wrap gap-2">
+                        {filterCategory.length > 0 && (
+                            <HiFilter
+                                className="h-4 w-4 cursor-pointer text-gray-300 hover:text-primary-400"
+                                onClick={() => setFilterCategory([])}
+                            />
+                        )}
+                        {categories.map((c) => {
+                            if (!filterCategory.includes(c.id)) return
+                            return (
+                                <div
+                                    key={c.id}
+                                    className="flex max-w-xs items-center gap-1 truncate rounded-lg text-xs text-slate-800"
+                                >
+                                    <div
+                                        className="h-2 w-2 rounded-full border border-slate-500"
+                                        style={{ background: c?.color }}
+                                    ></div>
+                                    {c?.title}
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
                 {bookMarks.map((b) => {
                     return (
                         <BookmarkRow

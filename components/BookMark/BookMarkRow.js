@@ -21,7 +21,7 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
     const categories = useBookMarkStore((state) => state.categories)
     return (
         <a href={url} target="_blank" rel="noreferrer">
-            <div className="relative rounded-xl border border-slate-200 bg-white transition duration-300 hover:shadow-lg hover:shadow-primary-100">
+            <div className="relative rounded-xl border border-slate-200 bg-white transition duration-100 hover:scale-105 hover:shadow-lg hover:shadow-primary-100">
                 <div className="flex items-center p-4 pr-20">
                     <div className="h-10 w-10 flex-shrink-0">
                         <img
@@ -47,7 +47,7 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
                         </p>
                     </div>
                 </div>
-                <div className="absolute top-2 right-2 flex flex-wrap gap-2  ">
+                <div className="absolute top-2 right-2 flex flex-wrap gap-2">
                     {category.map((c) => {
                         const catObj = categories.filter((x) => x.id === c)[0]
                         if (!catObj) return

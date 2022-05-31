@@ -4,10 +4,13 @@ import { HiPlus } from 'react-icons/hi'
 import Modal from '@/components/Modal/Modal'
 import Input from '@/components/Fields/Input'
 import { HiOutlinePencil, HiOutlineTrash, HiX } from 'react-icons/hi'
+import classNames from 'classnames'
 
 const CategoryManager = ({}) => {
     const categories = useBookMarkStore((state) => state.categories)
     const setCategory = useBookMarkStore((state) => state.setCategory)
+    const filterCategory = useBookMarkStore((state) => state.filterCategory)
+    const setFilterCategory = useBookMarkStore((state) => state.setFilterCategory)
     const [showModalAdd, setShowModalAdd] = useState(false)
     const [showModalDelete, setShowModalDelete] = useState(false)
     const [categoryToDelete, setCategoryToDelete] = useState(null)
@@ -40,8 +43,14 @@ const CategoryManager = ({}) => {
                                         <div
                                             className="h-4 w-4 shrink-0 rounded-full border-black"
                                             style={{ background: c.color }}
-                                        ></div>
-                                        <div className="w-full cursor-pointer rounded-lg py-1 px-3 text-primary-800 hover:bg-primary-50">
+                                        />
+                                        <div
+                                            className={classNames(
+                                                'w-full cursor-pointer rounded-lg py-1 px-3 text-primary-800 hover:bg-primary-50',
+                                                filterCategory.includes(c.id) ? 'bg-gray-100' : '',
+                                            )}
+                                            onClick={() => setFilterCategory(c.id)}
+                                        >
                                             {c.title}
                                         </div>
                                     </div>

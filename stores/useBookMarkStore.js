@@ -24,6 +24,17 @@ const useBookMarkStore = create((set, get) => ({
     //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     bookMarks: [],
     //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    filterCategory: [],
+    setFilterCategory: (payload) => {
+        if (!payload.length) return set({ filterCategory: [] })
+        const actualFilterCategory = get().filterCategory
+        if (actualFilterCategory.includes(payload)) {
+            return set({ filterCategory: [...actualFilterCategory.filter((fi) => fi !== payload)] })
+        }
+
+        return set({ filterCategory: [...actualFilterCategory, payload] })
+    },
+    //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     getBookMarks: (
         payload = {
             userId: '',
@@ -31,15 +42,12 @@ const useBookMarkStore = create((set, get) => ({
     ) => {
         const unsubscribe = onSnapshot(
             // query(collection(db, 'onivue-bookmarks/uid/bookmarks'))
-            query(
-                collection(db, `onivue-bookmarks/uid/bookmarks`),
-                // ...(payload.filterCategory && where('category', 'array-contains', '7qUbAfNBlYRhRqUmnfzy')),
-                // where('category', 'array-contains', '7qUbAfNBlYRhRqUmnfzy'),
-
-                // where('owner', '==', payload.userId),
-
-                // orderBy('title', 'asc'),
-            ),
+            get().filterCategory.length > 0
+                ? query(
+                      collection(db, `onivue-bookmarks/uid/bookmarks`),
+                      where('category', 'array-contains-any', get().filterCategory),
+                  )
+                : query(collection(db, `onivue-bookmarks/uid/bookmarks`)),
             (snapshot) => {
                 const documents = []
                 snapshot.forEach((doc) => documents.push({ id: doc.id, ...doc.data() }))
