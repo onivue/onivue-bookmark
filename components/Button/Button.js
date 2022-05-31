@@ -1,19 +1,6 @@
 import classNames from 'classnames'
 import React from 'react'
 
-// interface to declare all our prop types
-type Props = {
-    children: React.ReactNode
-    onClick?: () => void
-    variant?: string // default, primary, info, success, warning, danger, dark
-    size?: string // sm, md, lg
-    disabled?: boolean
-    style?: string
-    rounded?: boolean
-    className?: string
-    [rest: string]: any // ...rest
-}
-
 const styleBase = classNames(
     'font-bold align-bottom cursor-pointer transition duration-150 focus:outline-none items-center justify-center',
 )
@@ -35,19 +22,14 @@ const sizes = {
     md: 'px-4 py-2 text-sm',
     lg: 'px-6 py-3 text-lg',
 }
-export const Button: React.FunctionComponent<Props> = ({
-    style = 'primary',
-    rounded = false,
-    size,
-    disabled,
-    className = '',
-    children,
-    onClick,
-    ...rest
-}: Props) => (
+export const Button = (
+    { style = 'primary', rounded = false, size, disabled, className = '', children, ...rest },
+    ref,
+) => (
     <button
         {...rest}
         disabled={disabled}
+        ref={ref}
         className={classNames(
             className,
             styleBase,
@@ -56,10 +38,9 @@ export const Button: React.FunctionComponent<Props> = ({
             styles[style].base || styles.primary,
             disabled ? styleDisabled : styles[style].active,
         )}
-        onClick={onClick}
     >
         {children}
     </button>
 )
 
-export default Button
+export default forwardRef(Button)
