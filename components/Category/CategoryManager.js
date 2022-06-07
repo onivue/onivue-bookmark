@@ -1,10 +1,11 @@
 import useBookMarkStore from '@/stores/useBookMarkStore'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { HiPlus } from 'react-icons/hi'
 import Modal from '@/components/Modal/Modal'
 import Input from '@/components/Fields/Input'
 import { HiOutlinePencil, HiOutlineTrash, HiX } from 'react-icons/hi'
 import classNames from 'classnames'
+import useOnClickOutside from '@/hooks/useOnClickOutside'
 
 const CategoryManager = ({}) => {
     const categories = useBookMarkStore((state) => state.categories)
@@ -14,12 +15,14 @@ const CategoryManager = ({}) => {
     const [showModalAdd, setShowModalAdd] = useState(false)
     const [showModalDelete, setShowModalDelete] = useState(false)
     const [categoryToDelete, setCategoryToDelete] = useState(null)
-    const [isEdit, setIsEdit] = useState(false)
     const [formValues, setFormValues] = useState({ title: '', color: 'black' })
+    const [isEdit, setIsEdit] = useState(false)
+    const ref = useRef()
+    useOnClickOutside(ref, () => setIsEdit(false))
 
     return (
         <nav className="flex flex-col gap-8">
-            <div>
+            <div ref={ref}>
                 <div className="mb-4 flex items-center justify-between gap-4">
                     <h2 className="font-bold">Category Manager</h2>
                     {isEdit ? (
