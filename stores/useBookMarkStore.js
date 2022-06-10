@@ -41,13 +41,13 @@ const useBookMarkStore = create((set, get) => ({
         },
     ) => {
         const unsubscribe = onSnapshot(
-            // query(collection(db, 'onivue-bookmarks/uid/bookmarks'))
+            // query(collection(db, 'onivue-bookmark/uid/bookmarks'))
             get().filterCategory.length > 0
                 ? query(
-                      collection(db, `onivue-bookmarks/uid/bookmarks`),
+                      collection(db, `onivue-bookmark/${payload.userId})/bookmarks`),
                       where('category', 'array-contains-any', get().filterCategory),
                   )
-                : query(collection(db, `onivue-bookmarks/uid/bookmarks`)),
+                : query(collection(db, `onivue-bookmark/${payload.userId}/bookmarks`)),
             (snapshot) => {
                 const documents = []
                 snapshot.forEach((doc) => documents.push({ id: doc.id, ...doc.data() }))
@@ -64,11 +64,11 @@ const useBookMarkStore = create((set, get) => ({
         payload = {
             type: '',
             data: {},
-            // userId: '',
+            userId: '',
             docId: '',
         },
     ) => {
-        const col = collection(db, `onivue-bookmarks/uid/bookmarks`)
+        const col = collection(db, `onivue-bookmark/${payload.userId}/bookmarks`)
         if (payload.type === 'create') {
             payload.data.dateAdded = serverTimestamp()
             await addDoc(col, payload.data)
@@ -89,7 +89,7 @@ const useBookMarkStore = create((set, get) => ({
         },
     ) => {
         const unsubscribe = onSnapshot(
-            query(collection(db, 'onivue-bookmarks/uid/categories')),
+            query(collection(db, `onivue-bookmark/${payload.userId}/categories`)),
             (snapshot) => {
                 const documents = []
                 snapshot.forEach((doc) => documents.push({ id: doc.id, ...doc.data() }))
@@ -107,11 +107,11 @@ const useBookMarkStore = create((set, get) => ({
         payload = {
             type: '',
             data: {},
-            // userId: '',
+            userId: '',
             docId: '',
         },
     ) => {
-        const col = collection(db, `onivue-bookmarks/uid/categories`)
+        const col = collection(db, `onivue-bookmark/${payload.userId}/categories`)
         if (payload.type === 'create') {
             payload.data.dateAdded = serverTimestamp()
             await addDoc(col, payload.data)

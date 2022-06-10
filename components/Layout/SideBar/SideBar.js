@@ -19,7 +19,7 @@ export default function SideBar({ children }) {
     return (
         <>
             {sideBarIsOpen ? <SideBarOverlay /> : <SideBarToggleButton toggleSidenav={toggleSideBar} />}
-            <main className="mx-auto max-w-[1900px] ">
+            <main className="mx-auto">
                 <SideBarNavigationWrapper sideBarIsOpen={sideBarIsOpen} refProp={ref}>
                     <SideBarLogo />
                     <SideBarNavigation />
@@ -50,12 +50,12 @@ function SideBarOverlay() {
 function SideBarNavigationWrapper(props) {
     return (
         <aside
-            className={`fixed inset-y-0 z-20 w-80 transform py-4 pl-4 opacity-100 transition-all duration-500 lg:h-screen lg:-translate-x-0 ${
+            className={`fixed inset-y-0 z-20 w-80 transform  opacity-100 transition-all duration-300 lg:h-screen lg:-translate-x-0 ${
                 props.sideBarIsOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >
             <div
-                className="no-scrollbar flex h-full flex-1 flex-col overflow-y-hidden rounded-xl bg-white p-4 shadow-xl hover:overflow-y-auto focus:outline-none"
+                className="no-scrollbar flex h-full flex-1 flex-col overflow-y-hidden bg-white p-4 shadow-xl hover:overflow-y-auto focus:outline-none"
                 ref={props.refProp}
             >
                 {props.children}

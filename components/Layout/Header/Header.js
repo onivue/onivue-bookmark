@@ -4,8 +4,14 @@ import router from 'next/router'
 import { HiOutlineCog, HiOutlineUser } from 'react-icons/hi'
 import { BsPinAngle } from 'react-icons/bs'
 import LogoIcon from '@/components/LogoIcon/LogoIcon'
+import Button from '@/components/Button/Button'
+import { HiOutlineLogin, HiOutlineLogout } from 'react-icons/hi'
+import useAuthStore from '@/stores/useAuthStore'
 
 function Header() {
+    const user = useAuthStore((state) => state.user)
+    const loading = useAuthStore((state) => state.loading)
+    const logout = useAuthStore((state) => state.logout)
     return (
         <>
             <div className="fixed inset-x-0 z-10 h-16 w-full backdrop-blur"></div>
@@ -31,6 +37,24 @@ function Header() {
                                 username
                             </span>
                         </div>
+                        {user && !loading && (
+                            <>
+                                <Button size="sm" onClick={() => logout()}>
+                                    <HiOutlineLogout className="h-5 w-5" />
+                                </Button>
+                            </>
+                        )}
+                        {!user && !loading && (
+                            <>
+                                <Link href="/auth/login">
+                                    <a>
+                                        <Button size="sm">
+                                            <HiOutlineLogin className="h-5 w-5" />
+                                        </Button>
+                                    </a>
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import Input from '@/components/Fields/Input'
 import { HiOutlinePencil, HiOutlineTrash, HiX } from 'react-icons/hi'
 import classNames from 'classnames'
 import useOnClickOutside from '@/hooks/useOnClickOutside'
+import useAuthStore from '@/stores/useAuthStore'
 
 const CategoryManager = ({}) => {
     const categories = useBookMarkStore((state) => state.categories)
@@ -17,6 +18,9 @@ const CategoryManager = ({}) => {
     const [categoryToDelete, setCategoryToDelete] = useState(null)
     const [formValues, setFormValues] = useState({ title: '', color: 'black' })
     const [isEdit, setIsEdit] = useState(false)
+    const { user } = useAuthStore((state) => ({
+        user: state.user,
+    }))
     const ref = useRef()
     useOnClickOutside(ref, () => setIsEdit(false))
 
@@ -66,6 +70,7 @@ const CategoryManager = ({}) => {
                                                     type: 'update',
                                                     docId: c.id,
                                                     data: { ...c.data, color: e.target.value },
+                                                    userId: user.uid,
                                                 })
                                             }}
                                             value={c.color}
@@ -77,6 +82,7 @@ const CategoryManager = ({}) => {
                                                     type: 'update',
                                                     docId: c.id,
                                                     data: { ...c.data, title: e.target.value },
+                                                    userId: user.uid,
                                                 })
                                             }}
                                             value={c.title}
@@ -104,6 +110,7 @@ const CategoryManager = ({}) => {
                     setCategory({
                         type: 'delete',
                         docId: categoryToDelete.id,
+                        userId: user.uid,
                     })
                     setShowModalDelete(false)
                 }}
@@ -118,6 +125,7 @@ const CategoryManager = ({}) => {
                     setCategory({
                         type: 'create',
                         data: formValues,
+                        userId: user.uid,
                     })
                     setShowModalAdd(false)
                     setFormValues({ title: '', color: 'black' })

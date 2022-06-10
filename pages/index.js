@@ -1,5 +1,4 @@
 import BookmarkRow from '@/components/BookMark/BookMarkRow'
-import Hero from '@/components/Hero'
 import MultiSelect from '@/components/Fields/MultiSelect'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -8,9 +7,7 @@ import Input from '@/components/Fields/Input'
 import { HiPlus, HiFilter } from 'react-icons/hi'
 import useBookMarkStore from '@/stores/useBookMarkStore'
 import Button from '@/components/Button/Button'
-import Modal from '@/components/Modal/Modal'
-
-const options = ['UI', 'Tailwind', 'React', 'Next.js', 'Node.js', 'Github']
+import useAuthStore from '@/stores/useAuthStore'
 
 export default function Home() {
     const [isAddForm, setIsAddForm] = useState(false)
@@ -22,28 +19,36 @@ export default function Home() {
     const categories = useBookMarkStore((state) => state.categories)
     const filterCategory = useBookMarkStore((state) => state.filterCategory)
     const setFilterCategory = useBookMarkStore((state) => state.setFilterCategory)
-
+    const { user } = useAuthStore((state) => ({
+        user: state.user,
+    }))
     useEffect(() => {
         let unsubscribe
-        const getSubscribe = async () => {
-            unsubscribe = getBookMarks()
+        if (user) {
+            const getSubscribe = async () => {
+                unsubscribe = getBookMarks({ userId: user.uid })
+            }
+            getSubscribe()
+
+            return () => {
+                unsubscribe()
+            }
         }
-        getSubscribe()
-        return () => {
-            unsubscribe()
-        }
-    }, [getBookMarks, filterCategory])
+    }, [getBookMarks, filterCategory, user])
 
     useEffect(() => {
-        let unsubscribe
-        const getSubscribe = async () => {
-            unsubscribe = getCategories()
+        if (user) {
+            let unsubscribe
+            const getSubscribe = async () => {
+                unsubscribe = getCategories({ userId: user.uid })
+            }
+            getSubscribe()
+
+            return () => {
+                unsubscribe()
+            }
         }
-        getSubscribe()
-        return () => {
-            unsubscribe()
-        }
-    }, [getCategories])
+    }, [getCategories, user])
 
     return (
         <div className="relative">
@@ -90,7 +95,7 @@ export default function Home() {
                             style="primary"
                             className="h-12"
                             onClick={() => {
-                                setBookMark({ type: 'create', data: formValues })
+                                setBookMark({ type: 'create', data: formValues, userId: user.uid })
                                 setIsAddForm((s) => !s)
                             }}
                             type="button"

@@ -4,6 +4,7 @@ import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi'
 import { useEffect, useState } from 'react'
 import Modal from '@/components/Modal/Modal'
 import EditBookMark from './EditBookMark'
+import useAuthStore from '@/stores/useAuthStore'
 
 function getFaviconUrl(url) {
     return (
@@ -19,13 +20,16 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
     const [showModalEdit, setShowModalEdit] = useState(false)
     const setBookMark = useBookMarkStore((state) => state.setBookMark)
     const categories = useBookMarkStore((state) => state.categories)
+    const { user } = useAuthStore((state) => ({
+        user: state.user,
+    }))
     return (
         <a href={url} target="_blank" rel="noreferrer">
             <div className="relative rounded-xl border border-slate-200 bg-white transition duration-100 hover:scale-105 hover:shadow-lg hover:shadow-primary-100">
                 <div className="flex items-center p-4 pr-20">
                     <div className="h-10 w-10 flex-shrink-0">
                         <img
-                            className="h-full w-full rounded-lg bg-primary-50 object-cover"
+                            className="h-full w-full rounded-lg  object-cover"
                             src={getFaviconUrl(url)}
                             alt="favicon"
                             onError={(event) => (event.target.src = '/favicon.ico')}
@@ -42,9 +46,9 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
                         >
                             {url ? url : <>&nbsp;</>}
                         </div>
-                        <p className="truncate text-sm text-gray-500">
+                        {/* <p className="truncate text-sm text-gray-500">
                             {description ? description : <>&nbsp;</>}
-                        </p>
+                        </p> */}
                     </div>
                 </div>
                 <div className="absolute top-2 right-2 flex flex-wrap gap-2">
@@ -75,6 +79,7 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
                         setBookMark({
                             type: 'delete',
                             docId: id,
+                            userId: user.uid,
                         })
                     }}
                     type="warning"

@@ -4,11 +4,15 @@ import MultiSelect from '../Fields/MultiSelect'
 import { useEffect, useState } from 'react'
 import useBookMarkStore from '@/stores/useBookMarkStore'
 import Modal from '../Modal/Modal'
+import useAuthStore from '@/stores/useAuthStore'
 
 const EditBookMark = ({ values, show, onCancel, onClose, id }) => {
     const [formValues, setFormValues] = useState(values)
     const categories = useBookMarkStore((state) => state.categories)
     const setBookMark = useBookMarkStore((state) => state.setBookMark)
+    const { user } = useAuthStore((state) => ({
+        user: state.user,
+    }))
     return (
         <Modal
             title="Edit Bookmark"
@@ -17,10 +21,12 @@ const EditBookMark = ({ values, show, onCancel, onClose, id }) => {
             onCancel={onCancel}
             onSubmit={() => {
                 console.log(formValues)
+                console.log(user.uid)
                 setBookMark({
                     type: 'update',
                     data: formValues,
                     docId: id,
+                    userId: user.uid,
                 })
                 onClose()
             }}
