@@ -33,8 +33,8 @@ function Header() {
                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 p-2 ring-2 ring-primary-300">
                                 <HiOutlineUser className="h-full w-full text-primary-500" />
                             </div>
-                            <span className="ml-2 hidden max-w-[80px] flex-grow overflow-hidden text-ellipsis whitespace-nowrap lg:block">
-                                username
+                            <span className="ml-2 hidden  flex-grow overflow-hidden text-ellipsis whitespace-nowrap lg:block">
+                                {user?.email}
                             </span>
                         </div>
                         {user && !loading && (

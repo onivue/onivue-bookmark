@@ -9,6 +9,7 @@ import Header from '@/components/Layout/Header/Header'
 import RightSection from '@/components/Layout/RightSection/RightSection'
 import Footer from '@/components/Layout/Footer/Footer'
 import useAuthStore from '@/stores/useAuthStore'
+import Unathorized from '@/components/Unauthorized/Unathorized'
 
 function MyApp({ Component, pageProps }) {
     const { loading, user, authListener } = useAuthStore((state) => ({
@@ -34,8 +35,6 @@ function MyApp({ Component, pageProps }) {
             if (router.pathname === '/auth/register' || router.pathname === '/auth/login') {
                 router.push('/')
             }
-        } else {
-            router.push('/auth/login')
         }
     }, [user, router])
 
@@ -48,18 +47,28 @@ function MyApp({ Component, pageProps }) {
                 />
                 <title>onivue-...</title>
             </Head>
-            {}
-            <SideBar>
-                <Header />
+            {router.pathname !== '/auth/register' &&
+            router.pathname !== '/auth/resetpassword' &&
+            router.pathname !== '/auth/login' &&
+            router.pathname !== '/_error' &&
+            !user &&
+            !loading ? (
+                <Unathorized />
+            ) : (
+                !loading && (
+                    <SideBar>
+                        <Header />
 
-                <div className="flex flex-1">
-                    <section className="mb-4 mt-4 flex flex-1 grid-cols-1 flex-col justify-between rounded-lg px-4 pb-4">
-                        <Component {...pageProps} />
-                        <Footer />
-                    </section>
-                    {/* <RightSection /> */}
-                </div>
-            </SideBar>
+                        <div className="flex flex-1">
+                            <section className="mb-4 mt-4 flex flex-1 grid-cols-1 flex-col justify-between rounded-lg px-4 pb-4">
+                                <Component {...pageProps} />
+                                <Footer />
+                            </section>
+                            {/* <RightSection /> */}
+                        </div>
+                    </SideBar>
+                )
+            )}
         </>
     )
 }

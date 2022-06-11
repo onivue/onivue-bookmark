@@ -44,13 +44,14 @@ const useBookMarkStore = create((set, get) => ({
             // query(collection(db, 'onivue-bookmark/uid/bookmarks'))
             get().filterCategory.length > 0
                 ? query(
-                      collection(db, `onivue-bookmark/${payload.userId})/bookmarks`),
+                      collection(db, `onivue-bookmark/${payload.userId}/bookmarks`),
                       where('category', 'array-contains-any', get().filterCategory),
                   )
                 : query(collection(db, `onivue-bookmark/${payload.userId}/bookmarks`)),
             (snapshot) => {
                 const documents = []
                 snapshot.forEach((doc) => documents.push({ id: doc.id, ...doc.data() }))
+                console.log(documents)
                 set({ bookMarks: documents })
             },
         )
