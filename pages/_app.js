@@ -12,22 +12,16 @@ import useAuthStore from '@/stores/useAuthStore'
 import Unathorized from '@/components/Unauthorized/Unathorized'
 
 function MyApp({ Component, pageProps }) {
-    const { loading, user, authListener } = useAuthStore((state) => ({
-        loading: state.loading,
-        user: state.user,
-        authListener: state.authListener,
-    }))
+    const user = useAuthStore((state) => state.user)
+    const authListener = useAuthStore((state) => state.authListener)
+    const loading = useAuthStore((state) => state.loading)
     const router = useRouter()
     /* MANDATORY FOR AUTH SYSTEM */
     useEffect(() => {
         let unsubscribe
-        const getSubscribe = () => {
-            unsubscribe = authListener()
-        }
-        getSubscribe()
-        return () => {
-            unsubscribe()
-        }
+        const subscribe = () => (unsubscribe = authListener())
+        subscribe()
+        return () => unsubscribe()
     }, [authListener])
     /* IF USER IS AUTHENTICATED REDIRECT AUTH PAGES ... */
     useEffect(() => {
@@ -45,7 +39,7 @@ function MyApp({ Component, pageProps }) {
                     name="viewport"
                     content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no ,height=device-height"
                 />
-                <title>onivue-...</title>
+                <title>onivue-bookmark</title>
             </Head>
             {router.pathname !== '/auth/register' &&
             router.pathname !== '/auth/resetpassword' &&
@@ -56,17 +50,17 @@ function MyApp({ Component, pageProps }) {
                 <Unathorized />
             ) : (
                 !loading && (
-                    <SideBar>
-                        <Header />
-
-                        <div className="flex flex-1">
-                            <section className="mb-4 mt-4 flex flex-1 grid-cols-1 flex-col justify-between rounded-lg px-4 pb-4">
+                    <div className="flex h-screen">
+                        <SideBar width="20rem" />
+                        <div className="flex flex-1 flex-col overflow-auto rounded-lg px-4 pb-4">
+                            <Header />
+                            <main>
                                 <Component {...pageProps} />
-                                <Footer />
-                            </section>
-                            {/* <RightSection /> */}
+                                {/* <RightSection /> */}
+                            </main>
+                            <Footer />
                         </div>
-                    </SideBar>
+                    </div>
                 )
             )}
         </>

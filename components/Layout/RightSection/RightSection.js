@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 const RightSection = () => {
     return (
-        <div className="sticky top-20 hidden h-[calc(100vh-5rem)] w-52 gap-4 overflow-auto pt-4 pr-4 pl-2 xl:block">
+        <div className="fixed right-0 top-16 hidden h-[calc(100vh-5rem)] w-64 gap-4 overflow-auto pt-4 pr-4 pl-2 xl:block">
             <h2 className="mb-4 font-bold text-primary-500">Right Section</h2>
             <div className="flex flex-col gap-y-4">
                 <div className="cursor-pointer">
