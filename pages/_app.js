@@ -11,6 +11,9 @@ import Footer from '@/components/Layout/Footer/Footer'
 import useAuthStore from '@/stores/useAuthStore'
 import Unathorized from '@/components/Unauthorized/Unathorized'
 
+const allowedUnauthorizedPaths = ['/', '/_error']
+const authPaths = ['/auth/register', '/auth/resetpassword', '/auth/login']
+
 function MyApp({ Component, pageProps }) {
     const user = useAuthStore((state) => state.user)
     const authListener = useAuthStore((state) => state.authListener)
@@ -32,6 +35,15 @@ function MyApp({ Component, pageProps }) {
         }
     }, [user, router])
 
+    const isAllowed = () => {
+        return !allowedUnauthorizedPaths.includes(router.pathname) &&
+            !authPaths.includes(router.pathname) &&
+            !user &&
+            !loading
+            ? false
+            : true
+    }
+
     return (
         <>
             <Head>
@@ -41,28 +53,18 @@ function MyApp({ Component, pageProps }) {
                 />
                 <title>onivue-bookmark</title>
             </Head>
-            {router.pathname !== '/auth/register' &&
-            router.pathname !== '/auth/resetpassword' &&
-            router.pathname !== '/auth/login' &&
-            router.pathname !== '/_error' &&
-            !user &&
-            !loading ? (
-                <Unathorized />
-            ) : (
-                !loading && (
-                    <div className="flex h-screen">
-                        <SideBar width="20rem" />
-                        <div className="flex flex-1 flex-col overflow-auto rounded-lg px-4 pb-4">
-                            <Header />
-                            <main>
-                                <Component {...pageProps} />
-                                {/* <RightSection /> */}
-                            </main>
-                            <Footer />
-                        </div>
-                    </div>
-                )
-            )}
+
+            <div className="flex h-screen">
+                <SideBar width="20rem" hidden={!user} />
+                <div className="flex flex-1 flex-col justify-between overflow-auto">
+                    {!authPaths.includes(router.pathname) && <Header />}
+                    <main className={!authPaths.includes(router.pathname) ? 'h-full px-4 pb-4' : ''}>
+                        {/* <RightSection /> */}
+                        {isAllowed() ? <Component {...pageProps} /> : <Unathorized />}
+                    </main>
+                    {!authPaths.includes(router.pathname) && <Footer />}
+                </div>
+            </div>
         </>
     )
 }

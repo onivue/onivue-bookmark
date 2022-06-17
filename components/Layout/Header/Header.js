@@ -22,18 +22,21 @@ function Header() {
                         </a>
                     </Link>
                 </div>
-                <div className="flex items-center divide-primary-200 text-sm">
-                    <div className="false cursor-pointer px-3 text-zinc-400 hover:text-primary-600">
+                <div className="flex items-center text-sm">
+                    {/* <div className="false cursor-pointer px-3 text-zinc-400 hover:text-primary-600">
                         <HiOutlineCog className="h-8 w-8" />
-                    </div>
-                    <div className="flex cursor-pointer items-center  px-3 hover:text-primary-500">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 p-2 ring-2 ring-primary-300">
-                            <HiOutlineUser className="h-full w-full text-primary-500" />
+                    </div> */}
+                    {user && (
+                        <div className="flex cursor-pointer items-center  px-3 hover:text-primary-500">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 p-2 ring-2 ring-primary-300">
+                                <HiOutlineUser className="h-full w-full text-primary-500" />
+                            </div>
+                            <span className="ml-2 hidden  flex-grow overflow-hidden text-ellipsis whitespace-nowrap lg:block">
+                                {user?.email}
+                            </span>
                         </div>
-                        <span className="ml-2 hidden  flex-grow overflow-hidden text-ellipsis whitespace-nowrap lg:block">
-                            {user?.email}
-                        </span>
-                    </div>
+                    )}
+
                     {user && !loading && (
                         <div className="pl-3">
                             <Button size="sm" onClick={() => logout()}>

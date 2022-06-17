@@ -82,7 +82,7 @@ const useAuthStore = create((set, get) => ({
             // })
             const col = collection(db, `users`)
             await setDoc(doc(col, auth.currentUser.uid), {
-                username: username,
+                // username: username,
                 displayName: '',
                 photoURL: '',
             })
