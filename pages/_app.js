@@ -53,18 +53,27 @@ function MyApp({ Component, pageProps }) {
                 />
                 <title>onivue-bookmark</title>
             </Head>
-
-            <div className="flex h-screen">
+            {/* =========== PAGEWRAPPER =========== */}
+            <div className="flex min-h-screen">
                 <SideBar width="20rem" hidden={!user} />
-                <div className="flex flex-1 flex-col justify-between overflow-auto">
+                {/* =========== CONTENTWRAPPER =========== */}
+                <div className="flex flex-1 flex-col">
                     {!authPaths.includes(router.pathname) && <Header />}
-                    <main className={!authPaths.includes(router.pathname) ? 'h-full px-4 pb-4' : ''}>
+                    {/* =========== MAINWRAPPER =========== */}
+                    <main
+                        className={
+                            !authPaths.includes(router.pathname) ? 'flex h-full justify-center px-4 pb-4' : ''
+                        }
+                    >
                         {/* <RightSection /> */}
                         {isAllowed() ? <Component {...pageProps} /> : <Unathorized />}
                     </main>
+                    {/* =========== END MAINWRAPPER =========== */}
                     {!authPaths.includes(router.pathname) && <Footer />}
                 </div>
+                {/* =========== END CONTENTWRAPPER =========== */}
             </div>
+            {/* =========== END PAGEWRAPPER =========== */}
         </>
     )
 }

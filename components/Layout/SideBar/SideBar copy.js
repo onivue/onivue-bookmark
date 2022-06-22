@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import router from 'next/router'
 import Link from 'next/link'
-import { HiMenuAlt2 } from 'react-icons/hi'
 import LogoIcon from '@/components/LogoIcon/LogoIcon'
+import { HiMenuAlt2 } from 'react-icons/hi'
 import CategoryManager from '@/components/Category/CategoryManager'
 
-export default function SideBar({ hidden = false, width = '20rem' }) {
+export default function SideBar({ hidden, width }) {
     const [sideBarIsOpen, toggleSideBar] = useState(false)
     const ref = useRef(null)
     //MOBILE SIDEBAR TOGGLE HANDLER
@@ -30,20 +31,16 @@ export default function SideBar({ hidden = false, width = '20rem' }) {
     )
 }
 
-export function SideBarNavigation() {
-    return <CategoryManager />
-}
-
 function SideBarNavigationWrapper(props) {
     return (
         <aside
-            className={`fixed top-0 left-0 z-20 h-screen w-80 transform transition-all duration-300 lg:sticky lg:-translate-x-0 ${
+            className={`absolute inset-y-0 top-0 left-0 z-20 w-80 transform transition-all duration-300 lg:static lg:-translate-x-0 ${
                 props.sideBarIsOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
             style={{ width: props.width }}
         >
             <div
-                className="flex h-full flex-col overflow-auto bg-white p-4 shadow-xl focus:outline-none"
+                className="no-scrollbar flex h-full flex-col overflow-y-hidden bg-white p-4 shadow-xl hover:overflow-y-auto focus:outline-none"
                 ref={props.refProp}
             >
                 {props.children}
@@ -51,7 +48,6 @@ function SideBarNavigationWrapper(props) {
         </aside>
     )
 }
-
 function SideBarLogo() {
     return (
         <Link href="/" passHref>
@@ -61,7 +57,9 @@ function SideBarLogo() {
         </Link>
     )
 }
-
+export function SideBarNavigation() {
+    return <CategoryManager />
+}
 function SideBarToggleButton(props) {
     return (
         <div className={`fixed bottom-5 right-5 z-50 animate-fade-in items-center space-x-4 lg:hidden`}>
