@@ -37,7 +37,7 @@ export function SideBarNavigation() {
 function SideBarNavigationWrapper(props) {
     return (
         <aside
-            className={`fixed top-0 left-0 z-20 h-screen w-80 transform transition-all duration-300 lg:sticky lg:-translate-x-0 ${
+            className={`fixed top-0 left-0 z-20 h-screen w-80 shrink-0 transform transition-all duration-300 lg:sticky lg:-translate-x-0 ${
                 props.sideBarIsOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
             style={{ width: props.width }}
