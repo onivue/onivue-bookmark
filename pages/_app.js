@@ -57,7 +57,7 @@ function MyApp({ Component, pageProps }) {
             <div className="flex min-h-screen">
                 <SideBar width="20rem" hidden={!user} />
                 {/* =========== CONTENTWRAPPER =========== */}
-                <div className="flex flex-1 flex-col">
+                <div className="h-full w-full">
                     {!authPaths.includes(router.pathname) && <Header />}
                     {/* =========== MAINWRAPPER =========== */}
                     <main
