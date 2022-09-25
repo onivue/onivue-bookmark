@@ -1,4 +1,5 @@
 import create from 'zustand'
+import shallow from 'zustand/shallow'
 import { auth } from '@/lib/firebase'
 import {
     createUserWithEmailAndPassword,
@@ -28,7 +29,7 @@ import {
     orderBy,
 } from 'firebase/firestore'
 
-const useAuthStore = create((set, get) => ({
+const authStore = create((set, get) => ({
     user: null,
     loading: true,
     errorMessage: null,
@@ -127,5 +128,25 @@ const useAuthStore = create((set, get) => ({
         }
     },
 }))
+
+const useAuthStore = () => {
+    return authStore(
+        (store) => ({
+            user: store.user,
+            loading: store.loading,
+            errorMessage: store.errorMessage,
+            authListener: store.authListener,
+            login: store.login,
+            logout: store.logout,
+            register: store.register,
+            resetPassword: store.resetPassword,
+            updatePassword: store.updatePassword,
+            deleteAccount: store.deleteAccount,
+            publicRoutes: store.publicRoutes,
+            authRoutes: store.authRoutes,
+        }),
+        shallow,
+    )
+}
 
 export default useAuthStore

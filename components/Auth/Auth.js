@@ -8,10 +8,7 @@ import Link from 'next/link'
 const Auth = ({ mode }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const login = useAuthStore((state) => state.login)
-    const register = useAuthStore((state) => state.register)
-    const resetPassword = useAuthStore((state) => state.resetPassword)
-    const errorMessage = useAuthStore((state) => state.errorMessage)
+    const { login, register, resetPassword, errorMessage } = useAuthStore()
 
     const buttonName =
         mode === 'login'

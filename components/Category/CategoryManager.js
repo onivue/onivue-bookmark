@@ -18,9 +18,7 @@ const CategoryManager = ({}) => {
     const [categoryToDelete, setCategoryToDelete] = useState(null)
     const [formValues, setFormValues] = useState({ title: '', color: 'black' })
     const [isEdit, setIsEdit] = useState(false)
-    const { user } = useAuthStore((state) => ({
-        user: state.user,
-    }))
+    const { user } = useAuthStore()
     const ref = useRef()
     useOnClickOutside(ref, () => setIsEdit(false))
 

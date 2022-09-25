@@ -1,9 +1,6 @@
-import useAuthStore from '@/stores/useAuthStore'
 import Link from 'next/link'
 
 export default function Home() {
-    const user = useAuthStore((state) => state.user)
-
     return (
         <div className="relative">
             <div className="mx-auto py-20 text-center">

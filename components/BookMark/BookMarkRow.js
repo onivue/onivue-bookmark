@@ -20,9 +20,7 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
     const [showModalEdit, setShowModalEdit] = useState(false)
     const setBookMark = useBookMarkStore((state) => state.setBookMark)
     const categories = useBookMarkStore((state) => state.categories)
-    const { user } = useAuthStore((state) => ({
-        user: state.user,
-    }))
+    const { user } = useAuthStore()
     return (
         <a href={url} target="_blank" rel="noreferrer">
             <div className="relative rounded-xl border border-slate-200 bg-white transition-all duration-100 hover:scale-105 hover:shadow-lg hover:shadow-primary-100">

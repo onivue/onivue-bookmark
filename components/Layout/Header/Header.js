@@ -9,9 +9,7 @@ import { HiOutlineLogin, HiOutlineLogout } from 'react-icons/hi'
 import useAuthStore from '@/stores/useAuthStore'
 
 function Header() {
-    const user = useAuthStore((state) => state.user)
-    const loading = useAuthStore((state) => state.loading)
-    const logout = useAuthStore((state) => state.logout)
+    const { user, loading, logout } = useAuthStore()
     return (
         <header className="sticky top-0 z-10 flex items-center py-5 px-3 backdrop-blur lg:h-16">
             <div className="relative flex w-full items-center justify-between lg:flex-row-reverse">

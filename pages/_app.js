@@ -11,20 +11,19 @@ import Footer from '@/components/Layout/Footer/Footer'
 import useAuthStore from '@/stores/useAuthStore'
 import Unathorized from '@/components/Unauthorized/Unathorized'
 
-const allowedUnauthorizedPaths = ['/', '/_error']
-const authPaths = ['/auth/register', '/auth/resetpassword', '/auth/login']
+const publicRoutes = ['/', '/_error']
+const authRoutes = ['/auth/register', '/auth/resetpassword', '/auth/login']
 
 function MyApp({ Component, pageProps }) {
-    const user = useAuthStore((state) => state.user)
-    const authListener = useAuthStore((state) => state.authListener)
-    const loading = useAuthStore((state) => state.loading)
     const router = useRouter()
+    const { loading, user, authListener } = useAuthStore()
+
     /* MANDATORY FOR AUTH SYSTEM */
     useEffect(() => {
-        let unsubscribe
-        const subscribe = () => (unsubscribe = authListener())
-        subscribe()
-        return () => unsubscribe()
+        const unsubscribe = authListener()
+        return () => {
+            unsubscribe()
+        }
     }, [authListener])
     /* IF USER IS AUTHENTICATED REDIRECT AUTH PAGES ... */
     useEffect(() => {
@@ -36,12 +35,15 @@ function MyApp({ Component, pageProps }) {
     }, [user, router])
 
     const isAllowed = () => {
-        return !allowedUnauthorizedPaths.includes(router.pathname) &&
-            !authPaths.includes(router.pathname) &&
+        if (
+            !publicRoutes.includes(router.pathname) &&
+            !authRoutes.includes(router.pathname) &&
             !user &&
             !loading
-            ? false
-            : true
+        ) {
+            return false
+        }
+        return true
     }
 
     return (
@@ -58,18 +60,20 @@ function MyApp({ Component, pageProps }) {
                 <SideBar width="20rem" hidden={!user} />
                 {/* =========== CONTENTWRAPPER =========== */}
                 <div className="flex w-full flex-col justify-around">
-                    {!authPaths.includes(router.pathname) && <Header />}
+                    {!authRoutes.includes(router.pathname) && <Header />}
                     {/* =========== MAINWRAPPER =========== */}
                     <main
                         className={
-                            !authPaths.includes(router.pathname) ? 'flex h-full justify-center px-4 pb-4' : ''
+                            !authRoutes.includes(router.pathname)
+                                ? 'flex h-full justify-center px-4 pb-4'
+                                : ''
                         }
                     >
                         {/* <RightSection /> */}
                         {isAllowed() ? <Component {...pageProps} /> : <Unathorized />}
                     </main>
                     {/* =========== END MAINWRAPPER =========== */}
-                    {!authPaths.includes(router.pathname) && <Footer />}
+                    {!authRoutes.includes(router.pathname) && <Footer />}
                 </div>
                 {/* =========== END CONTENTWRAPPER =========== */}
             </div>

@@ -10,9 +10,7 @@ const EditBookMark = ({ values, show, onCancel, onClose, id }) => {
     const [formValues, setFormValues] = useState(values)
     const categories = useBookMarkStore((state) => state.categories)
     const setBookMark = useBookMarkStore((state) => state.setBookMark)
-    const { user } = useAuthStore((state) => ({
-        user: state.user,
-    }))
+    const { user } = useAuthStore()
     return (
         <Modal
             title="Edit Bookmark"

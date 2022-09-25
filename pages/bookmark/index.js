@@ -19,9 +19,7 @@ export default function Home() {
     const categories = useBookMarkStore((state) => state.categories)
     const filterCategory = useBookMarkStore((state) => state.filterCategory)
     const setFilterCategory = useBookMarkStore((state) => state.setFilterCategory)
-    const { user } = useAuthStore((state) => ({
-        user: state.user,
-    }))
+    const { user } = useAuthStore()
     useEffect(() => {
         let unsubscribe
         if (user) {
