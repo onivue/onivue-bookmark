@@ -31,17 +31,35 @@ import {
 
 const authStore = create((set, get) => ({
     user: null,
+    userData: null,
     loading: true,
     errorMessage: null,
     authListener: () => {
-        const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
             if (authUser) {
-                // console.log('LOGGED IN', authUser)
+                const userDocRef = doc(db, `users/${authUser.uid}`)
+                let userData = await getDoc(userDocRef)
+                if (!userData.exists()) {
+                    try {
+                        const { displayName, email, photoURL, uid } = authUser
+                        await setDoc(userDocRef, {
+                            displayName,
+                            email,
+                            uid,
+                            photoURL,
+                            updatedAt: serverTimestamp(),
+                        })
+                    } catch (e) {
+                        console.log(`Error when creating the user document`, e.message)
+                    }
+                }
+                userData = await getDoc(userDocRef)
                 set({ user: authUser })
+                set({ userData: userData.data() })
                 set({ loading: false })
-                // TODO: GET USER DB DATA AND SAVE TO STORE
             } else {
                 set({ user: null })
+                set({ userData: null })
                 set({ loading: false })
             }
         })
@@ -76,17 +94,10 @@ const authStore = create((set, get) => ({
         try {
             set({ loading: true })
             await createUserWithEmailAndPassword(auth, email, password)
-            // THIS CAN OTHER USERS NOT READ
-            // await updateProfile(auth.currentUser, {
-            //     displayName: username,
-            //     photoURL: "",
-            // })
             const col = collection(db, `users`)
-            await setDoc(doc(col, auth.currentUser.uid), {
-                // username: username,
-                displayName: '',
-                photoURL: '',
-            })
+            // await setDoc(doc(col, auth.currentUser.uid), {
+            //     // username: username,
+            // })
             set({ loading: false })
         } catch (err) {
             if (err.code === 'auth/email-already-in-use') {
@@ -133,6 +144,7 @@ const useAuthStore = () => {
     return authStore(
         (store) => ({
             user: store.user,
+            userData: store.userData,
             loading: store.loading,
             errorMessage: store.errorMessage,
             authListener: store.authListener,

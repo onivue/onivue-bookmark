@@ -16,7 +16,7 @@ const authRoutes = ['/auth/register', '/auth/resetpassword', '/auth/login']
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter()
-    const { loading, user, authListener } = useAuthStore()
+    const { loading, user, authListener, userData } = useAuthStore()
 
     /* MANDATORY FOR AUTH SYSTEM */
     useEffect(() => {
