@@ -29,34 +29,41 @@ import {
     orderBy,
 } from 'firebase/firestore'
 
-const authStore = create((set, get) => ({
+const useAuthStore = create((set, get) => ({
     user: null,
     userData: null,
     loading: true,
     errorMessage: null,
     authListener: () => {
         const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+            const { displayName, email, photoURL, uid } = authUser
             if (authUser) {
-                const userDocRef = doc(db, `users/${authUser.uid}`)
-                let userData = await getDoc(userDocRef)
-                if (!userData.exists()) {
-                    try {
-                        const { displayName, email, photoURL, uid } = authUser
+                try {
+                    const userDocRef = doc(db, `users/${authUser.uid}`)
+                    let userData = await getDoc(userDocRef)
+                    if (!userData.exists()) {
                         await setDoc(userDocRef, {
                             displayName,
-                            email,
                             uid,
                             photoURL,
                             updatedAt: serverTimestamp(),
                         })
-                    } catch (e) {
-                        console.log(`Error when creating the user document`, e.message)
+                    } else {
+                        await setDoc(userDocRef, {
+                            ...userData.data(),
+                            displayName,
+                            uid,
+                            photoURL,
+                            updatedAt: serverTimestamp(),
+                        })
                     }
+                    userData = await getDoc(userDocRef)
+                    set({ user: authUser })
+                    set({ userData: userData.data() })
+                    set({ loading: false })
+                } catch (e) {
+                    console.log(`Error when creating/updating the user document`, e.message)
                 }
-                userData = await getDoc(userDocRef)
-                set({ user: authUser })
-                set({ userData: userData.data() })
-                set({ loading: false })
             } else {
                 set({ user: null })
                 set({ userData: null })
@@ -89,6 +96,13 @@ const authStore = create((set, get) => ({
             set({ errorMessage: err.message })
             set({ loading: false })
         }
+    },
+    isUsernameValid: async (username) => {
+        const value = await getDocs(query(collection(db, `users`), where('username', '==', username)))
+        if (value.length > 0) {
+            return false
+        }
+        return true
     },
     register: async (email, password, username) => {
         try {
@@ -139,26 +153,5 @@ const authStore = create((set, get) => ({
         }
     },
 }))
-
-const useAuthStore = () => {
-    return authStore(
-        (store) => ({
-            user: store.user,
-            userData: store.userData,
-            loading: store.loading,
-            errorMessage: store.errorMessage,
-            authListener: store.authListener,
-            login: store.login,
-            logout: store.logout,
-            register: store.register,
-            resetPassword: store.resetPassword,
-            updatePassword: store.updatePassword,
-            deleteAccount: store.deleteAccount,
-            publicRoutes: store.publicRoutes,
-            authRoutes: store.authRoutes,
-        }),
-        shallow,
-    )
-}
 
 export default useAuthStore
