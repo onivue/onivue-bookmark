@@ -21,10 +21,8 @@ const Auth = ({ mode }) => {
         <div className="grid h-screen grid-cols-1 justify-items-center lg:grid-cols-2 lg:pb-4">
             <div className="order-last hidden w-full rounded-bl-2xl bg-gradient-to-br from-blue-400 to-green-400 shadow-xl transition-all lg:block"></div>
             <div className="flex w-full flex-col items-center justify-center p-4">
-                <Link href="/">
-                    <a>
-                        <LogoIcon className="h-12 w-12" />
-                    </a>
+                <Link href="/" passHref>
+                    <LogoIcon className="h-12 w-12" />
                 </Link>
                 <div className="w-full max-w-md rounded-xl  px-8 py-12 ">
                     <form className="flex flex-col justify-around space-y-8">
@@ -83,23 +81,13 @@ const Auth = ({ mode }) => {
                             {buttonName}
                         </Button>
                         <div className="mt-24 flex justify-between text-gray-400">
-                            {mode !== 'register' && (
-                                <Link href="/auth/register">
-                                    <a>Register here</a>
-                                </Link>
-                            )}
+                            {mode !== 'register' && <Link href="/auth/register">Register here</Link>}
 
                             {mode !== 'resetpassword' && (
-                                <Link href="/auth/resetpassword">
-                                    <a>Forgot your password?</a>
-                                </Link>
+                                <Link href="/auth/resetpassword">Forgot your password?</Link>
                             )}
 
-                            {mode !== 'login' && (
-                                <Link href="/auth/login">
-                                    <a>Login</a>
-                                </Link>
-                            )}
+                            {mode !== 'login' && <Link href="/auth/login">Login</Link>}
                         </div>
                     </form>
                 </div>

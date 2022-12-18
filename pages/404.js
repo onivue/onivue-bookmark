@@ -9,10 +9,8 @@ export default function FourOhFour() {
                     404 - Page Not Found
                 </h2>
                 <div className="flex justify-center">
-                    <Link href="/">
-                        <a className="mx-auto ">
-                            <Button>Go back</Button>
-                        </a>
+                    <Link href="/" className="mx-auto" passHref>
+                        <Button>Go back</Button>
                     </Link>
                 </div>
             </div>

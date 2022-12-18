@@ -14,10 +14,8 @@ function Header() {
         <header className="sticky top-0 z-10 flex items-center py-5 px-3 backdrop-blur lg:h-16">
             <div className="relative flex w-full items-center justify-between lg:flex-row-reverse">
                 <div className="mx-2 grid h-full place-items-center rounded-lg lg:hidden">
-                    <Link href="/">
-                        <a>
-                            <LogoIcon className="h-7 w-7" />
-                        </a>
+                    <Link href="/" passHref>
+                        <LogoIcon className="h-7 w-7" />
                     </Link>
                 </div>
                 <div className="flex items-center text-sm">
@@ -44,12 +42,10 @@ function Header() {
                     )}
                     {!user && !loading && (
                         <>
-                            <Link href="/auth/login">
-                                <a className="pl-3">
-                                    <Button size="sm">
-                                        <HiOutlineLogin className="h-5 w-5" />
-                                    </Button>
-                                </a>
+                            <Link href="/auth/login" passHref className="pl-3">
+                                <Button size="sm">
+                                    <HiOutlineLogin className="h-5 w-5" />
+                                </Button>
                             </Link>
                         </>
                     )}

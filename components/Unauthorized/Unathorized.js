@@ -10,10 +10,8 @@ const Unathorized = () => {
                         This page is just for authorized Users.
                     </h2>
 
-                    <Link href="/auth/login">
-                        <a className="mx-auto mt-12 grid w-1/2 grid-cols-1 gap-4">
-                            <Button style="secondary">Login</Button>
-                        </a>
+                    <Link href="/auth/login" className="mx-auto mt-12 grid w-1/2 grid-cols-1 gap-4" passHref>
+                        <Button style="secondary">Login</Button>
                     </Link>
                 </div>
             </div>

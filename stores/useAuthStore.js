@@ -36,8 +36,8 @@ const useAuthStore = create((set, get) => ({
     errorMessage: null,
     authListener: () => {
         const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
-            const { displayName, email, photoURL, uid } = authUser
             if (authUser) {
+                const { displayName, email, photoURL, uid } = authUser
                 try {
                     const userDocRef = doc(db, `users/${authUser.uid}`)
                     let userData = await getDoc(userDocRef)

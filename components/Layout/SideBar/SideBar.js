@@ -37,13 +37,13 @@ export function SideBarNavigation() {
 function SideBarNavigationWrapper(props) {
     return (
         <aside
-            className={`fixed top-0 left-0 z-20 h-screen w-80 shrink-0 transform transition-all duration-300 lg:sticky lg:-translate-x-0 ${
+            className={`fixed top-0 left-0 z-20 h-screen w-80 shrink-0 transform pt-16 transition-all duration-300 lg:sticky lg:-translate-x-0 ${
                 props.sideBarIsOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
             style={{ width: props.width }}
         >
             <div
-                className="flex h-full flex-col overflow-auto bg-white p-4 shadow-xl focus:outline-none"
+                className="flex h-full flex-col overflow-auto rounded-tr-lg border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-400/10 focus:outline-none"
                 ref={props.refProp}
             >
                 {props.children}
@@ -54,10 +54,8 @@ function SideBarNavigationWrapper(props) {
 
 function SideBarLogo() {
     return (
-        <Link href="/" passHref>
-            <div className="mt-5 mb-8 flex justify-center">
-                <LogoIcon className="h-12 w-12 cursor-pointer" />
-            </div>
+        <Link href="/" passHref className="mt-5 mb-8 flex justify-center">
+            <LogoIcon className="h-12 w-12 cursor-pointer" />
         </Link>
     )
 }

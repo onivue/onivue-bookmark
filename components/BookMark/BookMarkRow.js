@@ -23,7 +23,7 @@ const BookmarkRow = ({ url, description, title, id, category }) => {
     const { user } = useAuthStore()
     return (
         <a href={url} target="_blank" rel="noreferrer">
-            <div className="relative rounded-xl border border-slate-200 bg-white transition-all duration-100 hover:scale-105 hover:shadow-lg hover:shadow-primary-100">
+            <div className="relative rounded-xl border border-slate-200 bg-white transition-all duration-100 hover:scale-105 hover:shadow-lg hover:shadow-slate-100">
                 <div className="flex items-center p-4 pr-20">
                     <div className="h-10 w-10 flex-shrink-0">
                         <img

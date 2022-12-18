@@ -113,7 +113,7 @@ export default function Home() {
                     </div>
                 </div>
             ) : (
-                <div className="mb-12 mt-8 flex">
+                <div className="my-8 flex">
                     <Button
                         style="secondary"
                         type="button"
