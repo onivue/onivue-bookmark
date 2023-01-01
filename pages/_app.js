@@ -8,7 +8,7 @@ import SideBar from '@/components/Layout/SideBar/SideBar'
 import Header from '@/components/Layout/Header/Header'
 import RightSection from '@/components/Layout/RightSection/RightSection'
 import Footer from '@/components/Layout/Footer/Footer'
-import useAuthStore from '@/stores/useAuthStore'
+import useAuthStore, { useAuthListener } from '@/stores/useAuthStore'
 import Unathorized from '@/components/Unauthorized/Unathorized'
 
 const publicRoutes = ['/', '/_error']
@@ -19,12 +19,7 @@ function MyApp({ Component, pageProps }) {
     const { loading, user, authListener, userData } = useAuthStore()
 
     /* MANDATORY FOR AUTH SYSTEM */
-    useEffect(() => {
-        const unsubscribe = authListener()
-        return () => {
-            unsubscribe()
-        }
-    }, [authListener])
+    useAuthListener()
     /* IF USER IS AUTHENTICATED REDIRECT AUTH PAGES ... */
     useEffect(() => {
         if (user) {

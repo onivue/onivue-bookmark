@@ -28,6 +28,7 @@ import {
     where,
     orderBy,
 } from 'firebase/firestore'
+import { useEffect } from 'react'
 
 const useAuthStore = create((set, get) => ({
     user: null,
@@ -39,11 +40,12 @@ const useAuthStore = create((set, get) => ({
             if (authUser) {
                 const { displayName, email, photoURL, uid } = authUser
                 try {
-                    const userDocRef = doc(db, `users/${authUser.uid}`)
+                    const userDocRef = doc(db, `users/${uid}`)
                     let userData = await getDoc(userDocRef)
                     if (!userData.exists()) {
                         await setDoc(userDocRef, {
                             displayName,
+                            email,
                             uid,
                             photoURL,
                             updatedAt: serverTimestamp(),
@@ -153,5 +155,14 @@ const useAuthStore = create((set, get) => ({
         }
     },
 }))
+
+export const useAuthListener = () => {
+    useEffect(() => {
+        const unsubscribe = useAuthStore.getState().authListener()
+        return () => {
+            unsubscribe()
+        }
+    }, [])
+}
 
 export default useAuthStore
